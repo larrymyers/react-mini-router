@@ -1,0 +1,30 @@
+{
+  "name": "react-mini-router-example",
+  "version": "0.0.1",
+  "description": "A sample React app that uses the mini-router for client and server rendering.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.5.2",
+    "express": "^4.7.2",
+    "fluxxor": "^1.3.2",
+    "lodash-node": "^2.4.1",
+    "plates": "^0.4.9",
+    "react": "^0.11.1",
+    "superagent": "^0.18.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^2.1.4",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-env": "^0.4.1",
+    "grunt-nodemon": "^0.3.0",
+    "grunt-react": "^0.9.0",
+    "load-grunt-tasks": "^0.6.0"
+  }
+}
