@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Larry Myers <larry@larrymyers.com>",
+  "homepage": "https://github.com/larrymyers/react-mini-router",
+  "bugs": {
+    "url": "https://github.com/larrymyers/react-mini-router/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "path-to-regexp": "^0.2.3",
