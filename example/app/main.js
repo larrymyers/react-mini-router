@@ -11,6 +11,6 @@ var stores = {
 var flux = new Fluxxor.Flux(stores, actions);
 
 React.renderComponent(
-    App({ flux: flux }),
+    App({ flux: flux, history: true }),
     document.getElementById('app')
 );
