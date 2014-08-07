@@ -6,7 +6,7 @@ The router provides a small (both in size and complexity) mixin that is easy to 
 into a root level component and makes little to no demands how you structure your application.
 
 Routes call methods instead of creating components directly, so you can do any data loading outside of 
-the child components can keep them stateless. This also makes server side rendering straight forward.
+the child components and keep them stateless. This also makes server side rendering straight forward.
 
 Supports HTML5 History and Hash URLs, and requires no special components or markup. You can use
 regular anchor tags in your html markup to trigger navigation, or use the [navigate](./lib/navigate.js)
