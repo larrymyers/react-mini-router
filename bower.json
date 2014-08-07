@@ -18,10 +18,10 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
+    "example",
+    "lib",
     "node_modules",
-    "bower_components",
     "test",
-    "tests"
+    "index.js"
   ]
 }
