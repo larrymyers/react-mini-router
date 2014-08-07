@@ -13,7 +13,7 @@ regular anchor tags in your html markup to trigger navigation, or use the [navig
 util method to programmatically trigger routes. 
 
 Its only dependencies are [path-to-regexp](https://github.com/component/path-to-regexp),
-(urllite)[https://github.com/hzdg/urllite.js] and React >= 0.10.0.
+[urllite](https://github.com/hzdg/urllite.js) and React >= 0.10.0.
 
 The complete browser build is 4kb minified and gzipped.
 
