@@ -19,7 +19,13 @@ The complete browser build is 4kb minified and gzipped.
 
 ## Install
 
+If using CommonJS modules and browserify:
+
     npm install react-mini-router
+    
+For all other browser environments:
+
+    bower install react-mini-router
     
 ## Usage
 
