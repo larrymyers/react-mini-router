@@ -27,7 +27,7 @@ app.get('/', function(req, res) {
     var flux = new Fluxxor.Flux(stores, actions);
     var appHtml = React.renderComponentToString(App({ path: '/', flux: flux }));
 
-    render(res, appHtml, { todos: todos });
+    render(res, appHtml, { todos: todos, history: req.query.mode !== 'hash' });
 });
 
 app.get('/todos/new', function(req, res) {
