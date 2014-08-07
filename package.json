@@ -10,7 +10,10 @@
   },
   "author": "Larry Myers <larry@larrymyers.com>",
   "homepage": "https://github.com/larrymyers/react-mini-router",
-  "keywords": ["react", "router"],
+  "keywords": [
+    "react",
+    "router"
+  ],
   "bugs": {
     "url": "https://github.com/larrymyers/react-mini-router/issues"
   },
@@ -22,6 +25,11 @@
   },
   "devDependencies": {
     "browserify": "^5.9.1",
+    "karma": "^0.12.21",
+    "karma-browserifast": "^0.7.0",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-mocha": "^0.1.6",
+    "mocha": "^1.21.4",
     "uglify-js": "^2.4.15"
   }
 }
