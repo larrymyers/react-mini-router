@@ -38,7 +38,7 @@ module.exports = function(grunt) {
             }
         },
 
-        clean: ['dist', '.tmp', 'public/js/app.js']
+        clean: ['dist', '.tmp', 'public/js/app.js', 'app/components/*.js']
     });
 
     grunt.registerTask('serve', [
