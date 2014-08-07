@@ -1,12 +1,12 @@
 {
   "name": "react-mini-router",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
     "build": "browserify -e index.js -s ReactMiniRouter > dist/react-mini-router.js",
     "dist": "uglifyjs dist/react-mini-router.js > dist/react-mini-router.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --single-run"
   },
   "author": "Larry Myers <larry@larrymyers.com>",
   "homepage": "https://github.com/larrymyers/react-mini-router",
