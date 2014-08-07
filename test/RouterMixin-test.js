@@ -15,17 +15,28 @@ var App = React.createClass({
     },
 
     home: function() {
-        return React.DOM.div(null, 'test');
+        return React.DOM.div({ className: 'foo' }, 'test');
     }
 
 });
 
 describe('RouterMixin', function() {
 
-    it('Should render the route that matches the path prop.', function() {
-        var html = React.renderComponentToString(App({ path: '/' }));
+    beforeEach(function() {
+       $('body').append('<div class="app"></div>');
+    });
 
-        assert.equal(html, '<div data-reactid=".0" data-react-checksum="-1097856244">test</div>');
+    afterEach(function() {
+        $('.app').remove();
+    });
+
+    it('Should render the route that matches the path prop.', function() {
+        React.renderComponent(
+            App({ path: '/' }),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.foo').length, 1);
     });
 
 });

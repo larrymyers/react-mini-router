@@ -3,6 +3,10 @@ module.exports = function(config) {
 
         basePath: '',
 
+        files: [
+            'test/jquery-2.1.1.js'
+        ],
+
         frameworks: ['mocha', 'browserify'],
 
         browserify: {
