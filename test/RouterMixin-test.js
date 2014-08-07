@@ -22,12 +22,10 @@ var App = React.createClass({
 
 describe('RouterMixin', function() {
 
-    it('Should parse the routes on the component when mounting.', function() {
-        var app = App({ path: '/' });
-        var html = React.renderComponentToString(app);
+    it('Should render the route that matches the path prop.', function() {
+        var html = React.renderComponentToString(App({ path: '/' }));
 
         assert.equal(html, '<div data-reactid=".0" data-react-checksum="-1097856244">test</div>');
-        assert.equal(app._routes.length, 1);
     });
 
 });
