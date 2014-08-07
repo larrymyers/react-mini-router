@@ -11,6 +11,14 @@ var TodoForm = React.createClass({
 
     mixins: [FluxChildMixin],
 
+    componentDidMount: function() {
+        this.componentDidUpdate();
+    },
+
+    componentDidUpdate: function() {
+        this.refs.textInput.getDOMNode().focus();
+    },
+
     render: function() {
         return (
             <form onSubmit={this.submit}>
