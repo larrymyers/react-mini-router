@@ -1,6 +1,6 @@
 {
   "name": "react-mini-router",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
@@ -18,12 +18,15 @@
     "url": "https://github.com/larrymyers/react-mini-router/issues"
   },
   "license": "MIT",
+  "peerDependencies": {
+    "react": ">=0.10.0"
+  },
   "dependencies": {
     "path-to-regexp": "^0.2.3",
-    "react": "^0.11.1",
     "urllite": "^0.4.4"
   },
   "devDependencies": {
+    "react": "^0.11.1",
     "browserify": "^5.9.1",
     "karma": "^0.12.21",
     "karma-browserifast": "^0.7.0",
