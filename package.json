@@ -1,19 +1,26 @@
 {
   "name": "react-mini-router",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
+    "build": "browserify -e index.js -s ReactMiniRouter | uglify > react-mini-router.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Larry Myers <larry@larrymyers.com>",
   "homepage": "https://github.com/larrymyers/react-mini-router",
+  "keywords": ["react", "router"],
   "bugs": {
     "url": "https://github.com/larrymyers/react-mini-router/issues"
   },
   "license": "MIT",
   "dependencies": {
     "path-to-regexp": "^0.2.3",
-    "react": "^0.11.1"
+    "react": "^0.11.1",
+    "urllite": "^0.4.4"
+  },
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "uglify-js": "^2.4.15"
   }
 }
