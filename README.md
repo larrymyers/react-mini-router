@@ -50,6 +50,10 @@ For all other browser environments:
 
         message: function(text) {
             return <div>{text}</div>;
+        },
+
+        notFound: function(path) {
+            return <div class="not-found">Page Not Found: {path}</div>;
         }
 
     });
