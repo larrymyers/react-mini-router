@@ -48,6 +48,10 @@ var App = React.createClass({
 
     editTodo: function(todoId) {
 
+    },
+
+    notFound: function(path) {
+        return <div class="not-found">Uh oh. You've arrived somewhere that doesn't exist.</div>;
     }
 
 });

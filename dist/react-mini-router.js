@@ -5,7 +5,7 @@ module.exports = {
 };
 },{"./lib/RouterMixin":2,"./lib/navigate":4}],2:[function(require,module,exports){
 var pathToRegexp = require('path-to-regexp'),
-    urllite = require('urllite'),
+    urllite = require('urllite/lib/core'),
     detect = require('./detect');
 
 module.exports = {
@@ -48,9 +48,7 @@ module.exports = {
 
         if (path.length === 0) path = '/';
 
-        if (this.matchRoute(path)) {
-            this.setState({ path: path + url.search });
-        }
+        this.setState({ path: path + url.search });
     },
 
     renderCurrentRoute: function() {
@@ -63,7 +61,7 @@ module.exports = {
             url = urllite(window.location.href);
             if (!this.state.useHistory) url = urllite(url.hash ? url.hash.slice(2) : '');
         } else {
-            // TODO throw error? default to root?
+            url = urllite('/');
         }
 
         var parsedPath = url.pathname;
@@ -72,9 +70,13 @@ module.exports = {
 
         var matchedRoute = this.matchRoute(parsedPath);
 
-        // TODO if matchedRoute is null, render a 404
-
-        return matchedRoute.handler.apply(this, matchedRoute.params.concat(url.query));
+        if (matchedRoute) {
+            return matchedRoute.handler.apply(this, matchedRoute.params.concat(url.query));
+        } else if (this.notFound) {
+            return this.notFound(parsedPath, url.query);
+        } else {
+            throw new Error('No route matched path: ' + parsedPath);
+        }
     },
 
     handleClick: function(evt) {
@@ -121,7 +123,7 @@ module.exports = {
             return false;
         });
 
-        return matchedRoute;
+        return matchedRoute.handler ? matchedRoute : false;
     }
 
 };
@@ -187,7 +189,7 @@ function processRoutes(routes, component) {
     return patterns;
 }
 
-},{"./detect":3,"path-to-regexp":5,"urllite":6}],3:[function(require,module,exports){
+},{"./detect":3,"path-to-regexp":5,"urllite/lib/core":6}],3:[function(require,module,exports){
 var canUseDOM = !!(
     typeof window !== 'undefined' &&
     window.document &&
@@ -387,24 +389,6 @@ function pathtoRegexp (path, keys, options) {
 
 },{}],6:[function(require,module,exports){
 (function() {
-  var urllite;
-
-  urllite = require('./core');
-
-  require('./extensions/resolve');
-
-  require('./extensions/relativize');
-
-  require('./extensions/normalize');
-
-  require('./extensions/toString');
-
-  module.exports = urllite;
-
-}).call(this);
-
-},{"./core":7,"./extensions/normalize":8,"./extensions/relativize":9,"./extensions/resolve":10,"./extensions/toString":11}],7:[function(require,module,exports){
-(function() {
   var URL, URL_PATTERN, defaults, urllite,
     __hasProp = {}.hasOwnProperty,
     __slice = [].slice;
@@ -486,156 +470,5 @@ function pathtoRegexp (path, keys, options) {
 
 }).call(this);
 
-},{}],8:[function(require,module,exports){
-(function() {
-  var URL, urllite;
-
-  urllite = require('../core');
-
-  URL = urllite.URL;
-
-  URL.prototype.normalize = function() {
-    var m, pathname;
-    pathname = this.pathname;
-    while (m = /^(.*?)[^\/]+\/\.\.\/*(.*)$/.exec(pathname)) {
-      pathname = "" + m[1] + m[2];
-    }
-    if (this.host && pathname.indexOf('..') !== -1) {
-      throw new Error('Path is behind root.');
-    }
-    return urllite._createURL(this, {
-      pathname: pathname
-    });
-  };
-
-}).call(this);
-
-},{"../core":7}],9:[function(require,module,exports){
-(function() {
-  var URL, urllite;
-
-  urllite = require('../core');
-
-  require('./resolve');
-
-  URL = urllite.URL;
-
-  URL.prototype.relativize = function(other) {
-    var c, i, newSegments, otherSegments, url, urlSegments, _i, _len, _ref;
-    if (this.isPathRelative) {
-      return new urllite.URL(this);
-    }
-    if (typeof other === 'string') {
-      other = urllite(other);
-    }
-    url = this.resolve(other);
-    if (url.origin && url.origin !== other.origin) {
-      throw new Error("Origins don't match (" + url.origin + " and " + other.origin + ")");
-    } else if (!other.isAbsolute && !other.isAbsolutePathRelative) {
-      throw new Error("Other URL (<" + other + ">) is neither absolute nor absolute path relative.");
-    }
-    otherSegments = other.pathname.split('/').slice(1);
-    urlSegments = url.pathname.split('/').slice(1);
-    for (i = _i = 0, _len = urlSegments.length; _i < _len; i = ++_i) {
-      c = urlSegments[i];
-      if (!(c === otherSegments[i] && (urlSegments.length > (_ref = i + 1) && _ref < otherSegments.length))) {
-        break;
-      }
-    }
-    newSegments = urlSegments.slice(i);
-    while (i < otherSegments.length - 1) {
-      if (otherSegments[i]) {
-        newSegments.unshift('..');
-      }
-      i++;
-    }
-    if (newSegments.length === 1) {
-      newSegments = newSegments[0] === otherSegments[i] ? [''] : newSegments[0] === '' ? ['.'] : newSegments;
-    }
-    return urllite._createURL({
-      pathname: newSegments.join('/'),
-      search: url.search,
-      hash: url.hash
-    });
-  };
-
-}).call(this);
-
-},{"../core":7,"./resolve":10}],10:[function(require,module,exports){
-(function() {
-  var URL, copyProps, oldParse, urllite,
-    __slice = [].slice;
-
-  urllite = require('../core');
-
-  require('./normalize');
-
-  URL = urllite.URL;
-
-  oldParse = URL.parse;
-
-  copyProps = function() {
-    var prop, props, source, target, _i, _len;
-    target = arguments[0], source = arguments[1], props = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
-    for (_i = 0, _len = props.length; _i < _len; _i++) {
-      prop = props[_i];
-      target[prop] = source[prop];
-    }
-    return target;
-  };
-
-  URL.parse = function(raw, opts) {
-    var base, url;
-    if (base = opts != null ? opts.base : void 0) {
-      delete opts.base;
-    }
-    url = oldParse(raw, opts);
-    if (base) {
-      return url.resolve(base);
-    } else {
-      return url;
-    }
-  };
-
-  URL.prototype.resolve = function(base) {
-    var p, prefix;
-    if (this.isAbsolute) {
-      return new urllite.URL(this);
-    }
-    if (typeof base === 'string') {
-      base = urllite(base);
-    }
-    p = {};
-    if (this.isSchemeRelative) {
-      copyProps(p, this, 'username', 'password', 'host', 'hostname', 'port', 'pathname', 'search', 'hash');
-      p.isSchemeRelative = !(p.protocol = base.protocol);
-    } else if (this.isAbsolutePathRelative || this.isPathRelative) {
-      copyProps(p, this, 'search', 'hash');
-      copyProps(p, base, 'protocol', 'username', 'password', 'host', 'hostname', 'port');
-      p.pathname = this.isPathRelative ? base.pathname.slice(0, -1) === '/' ? "" + base.pathname + "/" + this.pathname : (prefix = base.pathname.split('/').slice(0, -1).join('/'), prefix ? "" + prefix + "/" + this.pathname : this.pathname) : this.pathname;
-    }
-    return urllite._createURL(p).normalize();
-  };
-
-}).call(this);
-
-},{"../core":7,"./normalize":8}],11:[function(require,module,exports){
-(function() {
-  var URL, urllite;
-
-  urllite = require('../core');
-
-  URL = urllite.URL;
-
-  URL.prototype.toString = function() {
-    var authority, prefix, userinfo;
-    prefix = this.isSchemeRelative ? '//' : this.protocol === 'file:' ? "" + this.protocol + "///" : this.protocol ? "" + this.protocol + "//" : '';
-    userinfo = this.password ? "" + this.username + ":" + this.password : this.username ? "" + this.username : '';
-    authority = userinfo ? "" + userinfo + "@" + this.host : this.host ? "" + this.host : '';
-    return "" + prefix + authority + this.pathname + this.search + this.hash;
-  };
-
-}).call(this);
-
-},{"../core":7}]},{},[1])(1)
+},{}]},{},[1])(1)
 });

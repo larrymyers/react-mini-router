@@ -15,7 +15,7 @@ util method to programmatically trigger routes.
 Its only dependencies are [path-to-regexp](https://github.com/component/path-to-regexp),
 [urllite](https://github.com/hzdg/urllite.js) and React >= 0.10.0.
 
-The complete browser build is 4kb minified and gzipped.
+The complete browser build is 8.2kb minified and 3.1kb minified and gzipped.
 
 ## Install
 
