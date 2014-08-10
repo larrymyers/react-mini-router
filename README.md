@@ -22,12 +22,13 @@ The complete browser build is 8.2kb minified and 3.1kb minified and gzipped.
 If using CommonJS modules and browserify:
 
     npm install react-mini-router
-    
+
 For all other browser environments:
 
     bower install react-mini-router
-    
+
 ## Usage
+
     var React = require('react'),
         RouterMixin = require('react-mini-router').RouterMixin;
 
@@ -59,6 +60,28 @@ For all other browser environments:
     });
 
     module.exports = App;
+
+### Route Definitions and Handler Methods
+
+The RouterMixin uses path-to-regexp for all route definitions. See the docs on [parameters](https://github.com/component/path-to-regexp#parameters)
+for the variations allowed when defining urls.
+
+When a url matches a route, the handler method is executed. The handler is called with the following arguments:
+
+1. Each matched parameter, in the order it appears in the url.
+2. An object of key/value pairs that represents the parsed url query string.
+
+Example:
+
+    routes: {
+       '/search/:searchQuery': 'searchResults'
+    }
+
+    function searchResults(searchQuery, params) {
+        // logic for getting search results data and rendering component
+    }
+
+    "/search/giant%20robots?sort=ascending&size=20" => searchResults("giant robots", { "sort": "ascending", "size": "20" })
 
 See the [example](./example) app for a complete solution that includes server side rendering 
 and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
