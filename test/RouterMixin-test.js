@@ -2,45 +2,7 @@ var assert = require('assert'),
     React = require('react'),
     RouterMixin = require('./../lib/RouterMixin');
 
-var App = React.createClass({
-
-    mixins: [RouterMixin],
-
-    routes: {
-        '/': 'home'
-    },
-
-    render: function() {
-        return this.renderCurrentRoute();
-    },
-
-    home: function() {
-        return React.DOM.div({ className: 'foo' }, 'test');
-    },
-
-    notFound: function(path) {
-        return React.DOM.div({ className: 'not-found'}, path);
-    }
-
-});
-
-var SimpleApp = React.createClass({
-
-    mixins: [RouterMixin],
-
-    routes: {
-        '/': 'home'
-    },
-
-    render: function() {
-        return this.renderCurrentRoute();
-    },
-
-    home: function() {
-        return React.DOM.div(null, 'test');
-    }
-
-});
+var App, AppWithoutNotFound;
 
 describe('RouterMixin', function() {
 
@@ -65,7 +27,7 @@ describe('RouterMixin', function() {
         assert.throws(
             function() {
                 React.renderComponent(
-                    SimpleApp({ path: '/bogus' }),
+                    AppWithoutNotFound({ path: '/bogus' }),
                     $('.app').get(0)
                 );
             },
@@ -81,5 +43,45 @@ describe('RouterMixin', function() {
 
         assert.equal($('.not-found').length, 1);
     });
+
+});
+
+App = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        '/': 'home'
+    },
+
+    render: function() {
+        return this.renderCurrentRoute();
+    },
+
+    home: function() {
+        return React.DOM.div({ className: 'foo' }, 'test');
+    },
+
+    notFound: function(path) {
+        return React.DOM.div({ className: 'not-found'}, path);
+    }
+
+});
+
+AppWithoutNotFound = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        '/': 'home'
+    },
+
+    render: function() {
+        return this.renderCurrentRoute();
+    },
+
+    home: function() {
+        return React.DOM.div(null, 'test');
+    }
 
 });
