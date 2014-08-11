@@ -10,6 +10,12 @@ var pathToRegexp = require('path-to-regexp'),
 
 module.exports = {
 
+    getDefaultProps: function() {
+        return {
+            routes: {}
+        };
+    },
+
     getInitialState: function() {
         return {
             path: this.props.path,
@@ -18,7 +24,7 @@ module.exports = {
     },
 
     componentWillMount: function() {
-        this.setState({ _routes: processRoutes(this.routes || {}, this) });
+        this.setState({ _routes: processRoutes(this.routes, this) });
     },
 
     componentDidMount: function() {
@@ -63,6 +69,8 @@ module.exports = {
         } else {
             url = urllite('/');
         }
+
+        url.query = parseSearch(url.search);
 
         var parsedPath = url.pathname;
 
@@ -187,6 +195,22 @@ function processRoutes(routes, component) {
     }
 
     return patterns;
+}
+
+function parseSearch(str) {
+    var parsed = {};
+
+    if (str.indexOf('?') === 0) str = str.slice(1);
+
+    var pairs = str.split('&');
+
+    pairs.forEach(function(pair) {
+        var keyVal = pair.split('=');
+
+        parsed[decodeURIComponent(keyVal[0])] = decodeURIComponent(keyVal[1]);
+    });
+
+    return parsed;
 }
 
 },{"./detect":3,"path-to-regexp":5,"urllite/lib/core":6}],3:[function(require,module,exports){
