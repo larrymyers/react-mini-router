@@ -1,5 +1,7 @@
 var assert = require('assert'),
-    React = require('react'),
+    sinon = require('sinon'),
+    React = require('react/addons'),
+    ReactTestUtils = React.addons.TestUtils,
     RouterMixin = require('./../lib/RouterMixin');
 
 var App, AppWithoutNotFound;
@@ -44,6 +46,21 @@ describe('RouterMixin', function() {
         assert.equal($('.not-found').length, 1);
     });
 
+    it('Should pass matched params and the parsed query string to the router handler.', function() {
+        var instance = ReactTestUtils.renderIntoDocument(App({ path: '/' }));
+        var spy = sinon.spy(instance.state._routes[1].handler);
+        instance.state._routes[1].handler = spy;
+
+        instance.setState({ path: '/search/foo?bar=baz%20baz'});
+
+        assert.ok(spy.called);
+
+        var args = spy.args[0];
+
+        assert.equal(args[0], 'foo');
+        assert.deepEqual(args[1], { 'bar': 'baz baz' });
+    });
+
 });
 
 App = React.createClass({
@@ -51,7 +68,8 @@ App = React.createClass({
     mixins: [RouterMixin],
 
     routes: {
-        '/': 'home'
+        '/': 'home',
+        '/search/:searchQuery': 'searchResults'
     },
 
     render: function() {
@@ -60,6 +78,10 @@ App = React.createClass({
 
     home: function() {
         return React.DOM.div({ className: 'foo' }, 'test');
+    },
+
+    searchResults: function(searchQuery, params) {
+        return React.DOM.div({ className: 'search-results'}, searchQuery);
     },
 
     notFound: function(path) {
