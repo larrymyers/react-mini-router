@@ -4,6 +4,7 @@ module.exports = function(config) {
         basePath: '',
 
         files: [
+            'test/es5-shim.js',
             'test/jquery-2.1.1.js'
         ],
 
@@ -25,7 +26,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         singleRun: false
     });
 };
