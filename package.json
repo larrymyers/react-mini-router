@@ -30,6 +30,7 @@
     "karma": "^0.12.21",
     "karma-browserifast": "^0.7.0",
     "karma-chrome-launcher": "^0.1.4",
+    "karma-cli": "0.0.4",
     "karma-mocha": "^0.1.6",
     "mocha": "^1.21.4",
     "react": "^0.11.1",
