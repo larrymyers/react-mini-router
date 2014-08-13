@@ -1,5 +1,7 @@
 # React Mini Router
 
+[![Build Status](https://travis-ci.org/larrymyers/react-mini-router.svg?branch=master)](https://travis-ci.org/larrymyers/react-mini-router)
+
 A minimal URL router for [React.js](http://facebook.github.io/react/).
 
 The router provides a small (both in size and complexity) mixin that is easy to integrate
