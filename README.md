@@ -4,11 +4,11 @@
 
 A minimal URL router for [React.js](http://facebook.github.io/react/).
 
-The router provides a small (both in size and complexity) mixin that is easy to integrate
-into a root level component and makes little to no demands how you structure your application.
+The router provides a small (both in size and complexity) React.js mixin that is easy to integrate
+into a root level component. It makes little to no demands on how you structure your application.
 
-Routes call methods instead of creating components directly, so you can do async data loading outside of
-the child components and keep them stateless. This also makes server side rendering straight forward.
+Routes call methods instead of creating components directly in order to do async data loading outside of
+the child components (allowing them to remain stateless. This also makes server side rendering straight forward.
 
 Supports HTML5 History and Hash URLs, and requires no special components or markup. You can use
 regular anchor tags in your html markup to trigger navigation, or use the [navigate](./lib/navigate.js)
@@ -63,6 +63,24 @@ For all other browser environments:
 
     module.exports = App;
 
+### Configuration
+
+By default the RouterMixin will use hash urls for routes. To enable the HTML5 History API
+with pushState, pass a "history" boolean property to the Component. If you're using server rendering
+and intend on focusing primarily on modern browsers, it is recommended to enable the History API.
+
+If a browser doesn't support the History API it will automatically fall back to hash urls.
+
+**NOTE:**  Hash urls will use the hashbang (i.e. #!) format in order to properly support
+the [ajax crawling](https://developers.google.com/webmasters/ajax-crawling/) Google spec.
+
+Example:
+
+    React.renderComponent(
+        App({ history: true }),
+        document.getElementById('app')
+    );
+
 ### Route Definitions and Handler Methods
 
 The RouterMixin uses path-to-regexp for all route definitions. See the docs on [parameters](https://github.com/component/path-to-regexp#parameters)
@@ -88,9 +106,22 @@ Example:
 See the [example](./example) app for a complete solution that includes server side rendering 
 and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
 
+### Navigation
+
+Any child anchor elements will have their click events captured, and if their href matches a route
+the matched route handler will be called.
+
+To programmatically trigger navigation there is a provided navigate method:
+
+    var navigate = require('react-mini-router').navigate;
+
+    navigate('/foo');
+
+If you want to update the address bar url, but not trigger routing:
+
+    navigate('/foo', true);
+
 ## Alternatives
 
 * [React Router](https://github.com/rackt/react-router)
 * [React Router Component](https://github.com/andreypopp/react-router-component)
-
-
