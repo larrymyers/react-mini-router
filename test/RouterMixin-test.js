@@ -2,7 +2,8 @@ var assert = require('assert'),
     sinon = require('sinon'),
     React = require('react/addons'),
     ReactTestUtils = React.addons.TestUtils,
-    RouterMixin = require('./../lib/RouterMixin');
+    RouterMixin = require('./../lib/RouterMixin'),
+    navigate = require('./../lib/navigate');
 
 var App, AppWithoutNotFound;
 
@@ -61,6 +62,21 @@ describe('RouterMixin', function() {
         assert.deepEqual(args[1], { 'bar': 'baz baz' });
     });
 
+    it('Should render the matched route when the hash url changes.', function(done) {
+        React.renderComponent(
+            App({ path: '/' }),
+            $('.app').get(0)
+        );
+
+        window.location.hash = '#!/search/foo';
+
+        setTimeout(function() {
+            assert.equal($('.search-results').length, 1);
+            done();
+        }, 100);
+    });
+
+    // TODO when PhantomJS 2.0 is out, we'll have pushState support, implement a test for it then.
 });
 
 App = React.createClass({
