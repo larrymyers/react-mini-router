@@ -1,12 +1,16 @@
 {
   "name": "react-mini-router",
   "main": "dist/react-mini-router.js",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "homepage": "https://github.com/larrymyers/react-mini-router",
   "authors": [
     "Larry Myers <larry@larrymyers.com>"
   ],
   "description": "A minimal router for React.js",
+  "dependencies": {
+    "path-to-regexp": "^0.2.3",
+    "urllite": "^0.4.4"
+  },
   "moduleType": [
     "amd",
     "globals",
@@ -19,10 +23,8 @@
   "license": "MIT",
   "ignore": [
     "example",
-    "lib",
     "node_modules",
     "test",
-    "index.js",
     "karma.conf.js"
   ]
 }
