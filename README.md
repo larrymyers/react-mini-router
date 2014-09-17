@@ -8,7 +8,7 @@ The router provides a small (both in size and complexity) React.js mixin that is
 into a root level component. It makes little to no demands on how you structure your application.
 
 Routes call methods instead of creating components directly in order to do async data loading outside of
-the child components (allowing them to remain stateless. This also makes server side rendering straight forward.
+the child components (allowing them to remain stateless). This also makes server side rendering straight forward.
 
 Supports HTML5 History and Hash URLs, and requires no special components or markup. You can use
 regular anchor tags in your html markup to trigger navigation, or use the [navigate](./lib/navigate.js)
@@ -105,6 +105,13 @@ Example:
 
 See the [example](./example) app for a complete solution that includes server side rendering 
 and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
+
+### The 404 Not Found Route
+
+By default the RouterMixin will throw an Error if it can't match a route. To render a 404 Not Found
+page just define a 'notFound' method on the component. It takes a single argument, path, which is
+the url path that failed to match a route definition. Any unmatched route will call this route handler
+if it is defined. See the usage example above for a code example.
 
 ### Navigation
 
