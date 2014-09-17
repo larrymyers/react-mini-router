@@ -8,8 +8,8 @@
   ],
   "description": "A minimal router for React.js",
   "dependencies": {
-    "path-to-regexp": "^0.2.3",
-    "urllite": "^0.4.4"
+    "path-to-regexp": "pillarjs/path-to-regexp#~1.0.1",
+    "urllite": "hzdg/urllite.js#~0.4.4"
   },
   "moduleType": [
     "amd",
