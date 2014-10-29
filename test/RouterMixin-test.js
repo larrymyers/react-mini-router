@@ -26,6 +26,15 @@ describe('RouterMixin', function() {
         assert.equal($('.foo').length, 1);
     });
 
+    it('Should preprend an optional root to each route, and match on the resulting path.', function() {
+        React.renderComponent(
+            App({ root: '/foo', path: '/foo/' }),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.foo').length, 1);
+    });
+
     it('Should throw an error if no route matches and a notFound handler does not exist.', function() {
         assert.throws(
             function() {
