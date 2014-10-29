@@ -29,6 +29,8 @@ For all other browser environments:
 
     bower install react-mini-router
 
+The dist/react-mini-router.js build exposes a global ReactMiniRouter variable.
+
 ## Usage
 
     var React = require('react'),
@@ -78,6 +80,13 @@ Example:
 
     React.renderComponent(
         App({ history: true }),
+        document.getElementById('app')
+    );
+
+You can also mount the Router at a root path, and all routes will be matched relative to it:
+
+    React.renderComponent(
+        App({ root: '/some/path/to/app' }),
         document.getElementById('app')
     );
 
