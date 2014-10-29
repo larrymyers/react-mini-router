@@ -1,7 +1,7 @@
 var React = require('react'),
     Fluxxor = require('fluxxor'),
     TodoStore = require('./todo-store'),
-    App = require('./components/app'),
+    App = React.createFactory(require('./components/app')),
     actions = require('./actions');
 
 var data = window.APP_DATA || {},
@@ -15,7 +15,7 @@ var stores = {
 
 var flux = new Fluxxor.Flux(stores, actions);
 
-React.renderComponent(
+React.render(
     App({ flux: flux, history: useHistory }),
     document.getElementById('app')
 );
