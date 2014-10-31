@@ -4,20 +4,21 @@
 
 A minimal URL router for [React.js](http://facebook.github.io/react/).
 
-The router provides a small (both in size and complexity) React.js mixin that is easy to integrate
-into a root level component. It makes little to no demands on how you structure your application.
+The router provides a small React.js mixin that is easy to integrate into a root level component.
+It makes little to no demands on how you structure your application.
 
-Routes call methods instead of creating components directly in order to do async data loading outside of
-the child components (allowing them to remain stateless). This also makes server side rendering straight forward.
+Routes call methods instead of creating components directly.  This makes async data loading outside of
+the child components straight forward (allowing them to remain stateless). This also makes server
+side rendering straight forward.
 
-Supports HTML5 History and Hash URLs, and requires no special components or markup. You can use
-regular anchor tags in your html markup to trigger navigation, or use the [navigate](./lib/navigate.js)
+The Router supports the  HTML5 History API and Hash URLs. It requires no special components or markup.
+You can use regular anchor tags in your html markup to trigger navigation, or use the [navigate](./lib/navigate.js)
 util method to programmatically trigger routes. 
 
 Its only dependencies are [path-to-regexp](https://github.com/component/path-to-regexp),
-[urllite](https://github.com/hzdg/urllite.js) and React >= 0.10.0.
+[urllite](https://github.com/hzdg/urllite.js) and React >= 0.12.0.
 
-The complete browser build is 8.2kb minified and 3.1kb minified and gzipped.
+The complete browser build is 8.4kb minified and 3.1kb minified and gzipped.
 
 ## Install
 
@@ -29,7 +30,7 @@ For all other browser environments:
 
     bower install react-mini-router
 
-The dist/react-mini-router.js build exposes a global ReactMiniRouter variable.
+The [dist/react-mini-router.js](./dist/react-mini-router.js) build exposes a global ReactMiniRouter variable.
 
 ## Usage
 
@@ -68,8 +69,8 @@ The dist/react-mini-router.js build exposes a global ReactMiniRouter variable.
 ### Configuration
 
 By default the RouterMixin will use hash urls for routes. To enable the HTML5 History API
-with pushState, pass a "history" boolean property to the Component. If you're using server rendering
-and intend on focusing primarily on modern browsers, it is recommended to enable the History API.
+with pushState pass a "history" boolean property to the Component. If you're using server rendering
+and intend on focusing primarily on modern browsers it is recommended to enable the History API.
 
 If a browser doesn't support the History API it will automatically fall back to hash urls.
 
@@ -78,14 +79,14 @@ the [ajax crawling](https://developers.google.com/webmasters/ajax-crawling/) Goo
 
 Example:
 
-    React.renderComponent(
+    React.render(
         App({ history: true }),
         document.getElementById('app')
     );
 
 You can also mount the Router at a root path, and all routes will be matched relative to it:
 
-    React.renderComponent(
+    React.render(
         App({ root: '/some/path/to/app' }),
         document.getElementById('app')
     );
