@@ -1,7 +1,7 @@
 {
   "name": "react-mini-router",
   "main": "dist/react-mini-router.js",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/larrymyers/react-mini-router",
   "authors": [
     "Larry Myers <larry@larrymyers.com>"
@@ -9,7 +9,7 @@
   "description": "A minimal router for React.js",
   "dependencies": {
     "path-to-regexp": "pillarjs/path-to-regexp#~1.0.1",
-    "urllite": "hzdg/urllite.js#~0.4.4"
+    "urllite": "hzdg/urllite.js#~0.5.0"
   },
   "moduleType": [
     "amd",

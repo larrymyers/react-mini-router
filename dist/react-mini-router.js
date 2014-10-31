@@ -419,8 +419,7 @@ function pathtoRegexp (path, keys, options) {
 },{}],6:[function(require,module,exports){
 (function() {
   var URL, URL_PATTERN, defaults, urllite,
-    __hasProp = {}.hasOwnProperty,
-    __slice = [].slice;
+    __hasProp = {}.hasOwnProperty;
 
   URL_PATTERN = /^(?:(?:([^:\/?\#]+:)\/+|(\/\/))(?:([a-z0-9-\._~%]+)(?::([a-z0-9-\._~%]+))?@)?(([a-z0-9-\._~%!$&'()*+,;=]+)(?::([0-9]+))?)?)?([^?\#]*?)(\?[^\#]*)?(\#.*)?$/;
 
@@ -430,12 +429,18 @@ function pathtoRegexp (path, keys, options) {
 
   urllite.URL = URL = (function() {
     function URL(props) {
-      var k, v;
-      for (k in props) {
-        if (!__hasProp.call(props, k)) continue;
-        v = props[k];
-        this[k] = v;
+      var k, v, _ref;
+      for (k in defaults) {
+        if (!__hasProp.call(defaults, k)) continue;
+        v = defaults[k];
+        this[k] = (_ref = props[k]) != null ? _ref : v;
       }
+      this.host || (this.host = this.hostname && this.port ? "" + this.hostname + ":" + this.port : this.hostname ? this.hostname : '');
+      this.origin || (this.origin = this.protocol ? "" + this.protocol + "//" + this.host : '');
+      this.isAbsolutePathRelative = !this.host && this.pathname.charAt(0) === '/';
+      this.isPathRelative = !this.host && this.pathname.charAt(0) !== '/';
+      this.isRelative = this.isSchemeRelative || this.isAbsolutePathRelative || this.isPathRelative;
+      this.isAbsolute = !this.isRelative;
     }
 
     URL.parse = function(raw) {
@@ -443,7 +448,7 @@ function pathtoRegexp (path, keys, options) {
       m = raw.toString().match(URL_PATTERN);
       pathname = m[8] || '';
       protocol = m[1];
-      return urllite._createURL({
+      return new urllite.URL({
         protocol: protocol,
         username: m[3],
         password: m[4],
@@ -472,27 +477,6 @@ function pathtoRegexp (path, keys, options) {
     hash: '',
     origin: '',
     isSchemeRelative: false
-  };
-
-  urllite._createURL = function() {
-    var base, bases, k, props, v, _i, _len, _ref, _ref1;
-    bases = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    props = {};
-    for (_i = 0, _len = bases.length; _i < _len; _i++) {
-      base = bases[_i];
-      for (k in defaults) {
-        if (!__hasProp.call(defaults, k)) continue;
-        v = defaults[k];
-        props[k] = (_ref = (_ref1 = base[k]) != null ? _ref1 : props[k]) != null ? _ref : v;
-      }
-    }
-    props.host = props.hostname && props.port ? "" + props.hostname + ":" + props.port : props.hostname ? props.hostname : '';
-    props.origin = props.protocol ? "" + props.protocol + "//" + props.host : '';
-    props.isAbsolutePathRelative = !props.host && props.pathname.charAt(0) === '/';
-    props.isPathRelative = !props.host && props.pathname.charAt(0) !== '/';
-    props.isRelative = props.isSchemeRelative || props.isAbsolutePathRelative || props.isPathRelative;
-    props.isAbsolute = !props.isRelative;
-    return new urllite.URL(props);
   };
 
   module.exports = urllite;
