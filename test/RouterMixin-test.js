@@ -18,7 +18,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should render the route that matches the path prop.', function() {
-        React.renderComponent(
+        React.render(
             App({ path: '/' }),
             $('.app').get(0)
         );
@@ -27,7 +27,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should preprend an optional root to each route, and match on the resulting path.', function() {
-        React.renderComponent(
+        React.render(
             App({ root: '/foo', path: '/foo/' }),
             $('.app').get(0)
         );
@@ -38,7 +38,7 @@ describe('RouterMixin', function() {
     it('Should throw an error if no route matches and a notFound handler does not exist.', function() {
         assert.throws(
             function() {
-                React.renderComponent(
+                React.render(
                     AppWithoutNotFound({ path: '/bogus' }),
                     $('.app').get(0)
                 );
@@ -48,7 +48,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should render the notFound handler if no route exists.', function() {
-        React.renderComponent(
+        React.render(
             App({ path: '/bogus' }),
             $('.app').get(0)
         );
@@ -72,7 +72,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should render the matched route when the hash url changes.', function(done) {
-        React.renderComponent(
+        React.render(
             App({ path: '/' }),
             $('.app').get(0)
         );
@@ -88,7 +88,7 @@ describe('RouterMixin', function() {
     // TODO when PhantomJS 2.0 is out, we'll have pushState support, implement a test for it then.
 });
 
-App = React.createClass({
+var AppClass = React.createClass({
 
     mixins: [RouterMixin],
 
@@ -115,7 +115,7 @@ App = React.createClass({
 
 });
 
-AppWithoutNotFound = React.createClass({
+var AppWithoutNotFoundClass = React.createClass({
 
     mixins: [RouterMixin],
 
@@ -132,3 +132,6 @@ AppWithoutNotFound = React.createClass({
     }
 
 });
+
+App = React.createFactory(AppClass);
+AppWithoutNotFound = React.createFactory(AppWithoutNotFoundClass);
