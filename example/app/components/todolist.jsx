@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 var React = require('react'),
     _map = require('lodash-node/modern/collections/map');
 

@@ -10,7 +10,7 @@ var fs = require('fs'),
     Fluxxor = require('fluxxor'),
     TodoStore = require('./app/todo-store'),
     actions = require('./app/actions'),
-    App = require('./app/components/app');
+    App = React.createFactory(require('./app/components/app'));
 
 var app = express(),
     todos = [];
@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
     };
 
     var flux = new Fluxxor.Flux(stores, actions);
-    var appHtml = React.renderComponentToString(App({ path: '/', flux: flux }));
+    var appHtml = React.renderToString(App({ path: '/', flux: flux }));
 
     render(res, appHtml, { todos: todos, history: req.query.mode !== 'hash' });
 });
@@ -36,7 +36,7 @@ app.get('/todos/new', function(req, res) {
     };
 
     var flux = new Fluxxor.Flux(stores, actions);
-    var appHtml = React.renderComponentToString(App({ path: '/todos/new', flux: flux }));
+    var appHtml = React.renderToString(App({ path: '/todos/new', flux: flux }));
 
     render(res, appHtml, { todos: todos, history: req.query.mode !== 'hash' });
 });
