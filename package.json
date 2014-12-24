@@ -14,6 +14,10 @@
     "react",
     "router"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larrymyers/react-mini-router"
+  },
   "bugs": {
     "url": "https://github.com/larrymyers/react-mini-router/issues"
   },
