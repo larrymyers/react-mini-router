@@ -20,6 +20,9 @@ Its only dependencies are [path-to-regexp](https://github.com/component/path-to-
 
 The complete browser build is 8.4kb minified and 3.1kb minified and gzipped.
 
+See the [example](./example) app for a complete solution that includes server side rendering
+and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
+
 ## Install
 
 If using CommonJS modules and browserify:
@@ -112,9 +115,6 @@ Example:
     }
 
     "/search/giant%20robots?sort=ascending&size=20" => searchResults("giant robots", { "sort": "ascending", "size": "20" })
-
-See the [example](./example) app for a complete solution that includes server side rendering 
-and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
 
 ### The 404 Not Found Route
 
