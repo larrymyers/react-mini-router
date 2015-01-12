@@ -5,19 +5,18 @@ module.exports = function(config) {
 
         files: [
             'test/es5-shim.js',
-            'test/jquery-2.1.1.js'
+            'test/jquery-2.1.1.js',
+            'test/**/*-test.js'
         ],
 
         frameworks: ['mocha', 'browserify'],
 
         browserify: {
-            files: [
-                'test/**/*-test.js'
-            ]
+            debug: true
         },
 
         preprocessors: {
-            '/**/*.browserify': 'browserify'
+            'test/**/*-test.js': ['browserify']
         },
 
         reporters: ['progress'],
