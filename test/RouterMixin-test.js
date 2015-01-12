@@ -14,7 +14,10 @@ describe('RouterMixin', function() {
     });
 
     afterEach(function() {
-        $('.app').remove();
+        var $root = $('.app');
+
+        React.unmountComponentAtNode($root.get(0));
+        $root.remove();
     });
 
     it('Should render the route that matches the path prop.', function() {
