@@ -1,11 +1,10 @@
 var React = require('react'),
     navigate = require('./../../../lib/navigate'),
-    Fluxxor = require('fluxxor'),
-    FluxChildMixin = Fluxxor.FluxChildMixin(React);
+    Fluxxor = require('fluxxor');
 
 var TodoForm = React.createClass({
 
-    mixins: [FluxChildMixin],
+    mixins: [Fluxxor.FluxMixin(React)],
 
     componentDidMount: function() {
         this.componentDidUpdate();

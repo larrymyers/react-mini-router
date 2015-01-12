@@ -33,7 +33,8 @@ module.exports = function(grunt) {
                 src: 'app/main.js',
                 dest: 'public/js/app.js',
                 options: {
-                    bundleOptions: { debug: true }
+                    watch: true,
+                    browserifyOptions: { debug: true }
                 }
             }
         },
