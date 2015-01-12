@@ -5,7 +5,7 @@ var assert = require('assert'),
     RouterMixin = require('./../lib/RouterMixin'),
     navigate = require('./../lib/navigate');
 
-var App, AppWithoutNotFound;
+var App, AppWithoutNotFound, NestedApp;
 
 describe('RouterMixin', function() {
 
@@ -85,6 +85,15 @@ describe('RouterMixin', function() {
         }, 100);
     });
 
+    it('Should render the nested app.', function() {
+        React.render(
+            App({ path: '/nested' }),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.nested').length, 1);
+    });
+
     // TODO when PhantomJS 2.0 is out, we'll have pushState support, implement a test for it then.
 });
 
@@ -94,7 +103,8 @@ var AppClass = React.createClass({
 
     routes: {
         '/': 'home',
-        '/search/:searchQuery': 'searchResults'
+        '/search/:searchQuery': 'searchResults',
+        '/nested/:path*': 'nestedApp'
     },
 
     render: function() {
@@ -107,6 +117,10 @@ var AppClass = React.createClass({
 
     searchResults: function(searchQuery, params) {
         return React.DOM.div({ className: 'search-results'}, searchQuery);
+    },
+
+    nestedApp: function() {
+        return NestedApp({ root: '/nested' });
     },
 
     notFound: function(path) {
@@ -133,5 +147,24 @@ var AppWithoutNotFoundClass = React.createClass({
 
 });
 
+var NestedAppClass = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        '/': 'home'
+    },
+
+    render: function() {
+        return this.renderCurrentRoute();
+    },
+
+    home: function() {
+        return React.DOM.div({ className: 'nested' }, 'test');
+    }
+
+});
+
 App = React.createFactory(AppClass);
 AppWithoutNotFound = React.createFactory(AppWithoutNotFoundClass);
+NestedApp = React.createFactory(NestedAppClass);
