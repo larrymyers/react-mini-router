@@ -4,7 +4,7 @@
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -e index.js -s ReactMiniRouter > dist/react-mini-router.js",
+    "build": "browserify -e index.js -t browserify-shim -s ReactMiniRouter > dist/react-mini-router.js",
     "dist": "uglifyjs dist/react-mini-router.js > dist/react-mini-router.min.js",
     "test": "karma start --single-run"
   },
@@ -24,9 +24,6 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=0.12.0"
-  },
-  "browserify": {
-    "transform": ["browserify-shim"]
   },
   "browserify-shim": {
     "react": "global:React"
