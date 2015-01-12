@@ -19,7 +19,18 @@ describe('RouterMixin', function() {
 
     it('Should render the route that matches the path prop.', function() {
         React.render(
-            App({ path: '/' }),
+            App({ path: '/search/foo' }),
+            $('.app').get(0)
+        );
+
+        var $el = $('.search-results');
+        assert.equal($el.length, 1);
+        assert.equal($el.text(), 'foo');
+    });
+
+    it('Should default path to the url root if it is not passed as a prop.', function() {
+        React.render(
+            App(),
             $('.app').get(0)
         );
 
