@@ -4,9 +4,9 @@ module.exports = function(config) {
         basePath: '',
 
         files: [
-            'test/es5-shim.js',
-            'test/jquery-2.1.1.js',
-            'test/**/*-test.js'
+            'test/vendor/es5-shim.js',
+            'test/vendor/jquery-2.1.1.js',
+            'test/client/**/*.test.js'
         ],
 
         frameworks: ['mocha', 'browserify'],
@@ -16,7 +16,7 @@ module.exports = function(config) {
         },
 
         preprocessors: {
-            'test/**/*-test.js': ['browserify']
+            'test/browser/**/*.test.js': ['browserify']
         },
 
         reporters: ['progress'],
@@ -24,7 +24,7 @@ module.exports = function(config) {
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
-        autoWatch: true,
+        autoWatch: false,
         browsers: ['PhantomJS'],
         singleRun: false
     });

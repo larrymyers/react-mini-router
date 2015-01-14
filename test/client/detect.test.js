@@ -2,7 +2,7 @@ var assert = require('assert');
 
 describe('detect', function() {
 
-    var detect = require('./../lib/detect');
+    var detect = require('./../../lib/detect');
 
     it('Should detect if it is running in a DOM environment.', function() {
         assert.ok(detect.canUseDOM);

@@ -138,6 +138,10 @@ If you want to update the address bar url, but not trigger routing:
 
     navigate('/foo', true);
 
+## Server Rendering
+
+## Nested Routers
+
 ## Alternatives
 
 * [React Router](https://github.com/rackt/react-router)

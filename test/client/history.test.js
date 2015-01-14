@@ -1,0 +1,103 @@
+var assert = require('assert'),
+    React = require('react'),
+    RouterMixin = require('./../../lib/RouterMixin'),
+    navigate = require('./../../lib/navigate');
+
+var App, NestedApp;
+
+describe('RouterMixin', function() {
+
+    beforeEach(function() {
+       $('body').append('<div class="app"></div>');
+    });
+
+    afterEach(function() {
+        var $root = $('.app');
+        React.unmountComponentAtNode($root.get(0));
+        $root.remove();
+        setHash('');
+    });
+
+    function setHash(url) {
+        window.location.hash = '#!' + url;
+    }
+
+    it('Should render the matched route when the hash url changes.', function(done) {
+        setHash('/');
+
+        React.render(
+            App(),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.home').length, 1);
+        assert.equal($('.nested').length, 0);
+
+        setHash('/nested/');
+
+        setTimeout(function() {
+            assert.equal($('.home').length, 0);
+            assert.equal($('.nested').length, 1);
+            done();
+        }, 100);
+    });
+
+    it('Should render the matched route when the url changes and history support is enabled.', function() {
+        // TODO create a pushState test, but detect the functionality first since phantomjs won't
+        // have history API support until 2.0.
+    });
+
+    it('Should trigger a route when navigate is called with a routable url.', function() {
+
+    });
+
+    it('Should trigger a route when a link is clicked on with a routable href.', function() {
+        // TODO make sure propagation is stopped correctly so a handler matches
+        // on the correct app (with nesting)
+    });
+
+});
+
+var AppClass = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        '/': 'home',
+        '/nested/:path*': 'nestedApp'
+    },
+
+    render: function() {
+        return this.renderCurrentRoute();
+    },
+
+    home: function() {
+        return React.DOM.div({ className: 'home' }, 'root home');
+    },
+
+    nestedApp: function() {
+        return NestedApp({ root: '/nested' });
+    }
+
+});
+
+var NestedAppClass = React.createClass({
+
+    mixins: [RouterMixin],
+
+    routes: {
+        '/': 'home'
+    },
+
+    render: function() {
+        return this.renderCurrentRoute();
+    },
+
+    home: function() {
+        return React.DOM.div({ className: 'nested' }, 'nested home');
+    }
+
+});
+
+App = React.createFactory(AppClass);
+NestedApp = React.createFactory(NestedAppClass);
