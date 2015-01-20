@@ -4,8 +4,18 @@ var host = typeof window === 'undefined' ? 'http://localhost:4000' : '';
 
 module.exports = {
 
+    createList: function(data, callback) {
+        request.post(host + '/api/lists/').send(data).end(function(res) {
+            callback(null, res.body);
+        });
+    },
+
+    deleteList: function(data, callback) {
+
+    },
+
     createTodo: function(data, callback) {
-        request.post(host + '/api/todos').send(data).end(function(res) {
+        request.post(host + '/api/todos/').send(data).end(function(res) {
             callback(null, res.body);
         });
     },

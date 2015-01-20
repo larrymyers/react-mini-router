@@ -1,0 +1,27 @@
+nav {
+    padding: 10px 15px;
+}
+
+nav a {
+    padding: 0 10px;
+}
+
+nav a:first-child {
+    border-right: 1px solid #cccccc;
+}
+
+#app {
+    margin-top: 25px;
+}
+
+.lists {
+    max-width: 400px;
+}
+
+.lists li {
+    cursor: pointer;
+}
+
+.create-list-input {
+    margin-right: 15px;
+}

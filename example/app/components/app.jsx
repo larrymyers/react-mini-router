@@ -3,16 +3,14 @@ var React = require('react'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     RouterMixin = require('./../../../lib/RouterMixin'),
-    TodoList = require('./todolist'),
-    TodoForm = require('./todoform');
+    CreateTodoList = require('./createtodolist'),
+    TodoList = require('./todolist');
 
 var App = React.createClass({
 
     routes: {
-        '/': 'viewAllTodos',
-        '/todos/new': 'createTodo',
-        '/todos/:todoId': 'viewTodo',
-        '/todos/:todoId/edit': 'editTodo'
+        '/': 'viewAllLists',
+        '/lists/:id': 'viewList'
     },
 
     mixins: [RouterMixin, FluxMixin, StoreWatchMixin('TodoStore')],
@@ -25,29 +23,25 @@ var App = React.createClass({
         return <div>{this.renderCurrentRoute()}</div>;
     },
 
-    viewAllTodos: function() {
+    viewAllLists: function() {
         return (
             <div>
-                <a href="/todos/new">Create New Todo</a>
-                <TodoList todos={this.state.todos}/>
+                <ul className="lists list-group">
+                {this.state.lists.map(function(list) {
+                    return <li className="list-group-item" key={list.id}>{list.name}</li>;
+                })}
+                </ul>
+                <CreateTodoList/>
             </div>
         );
     },
 
-    createTodo: function() {
-        return <TodoForm/>
-    },
-
-    viewTodo: function(todoId) {
-
-    },
-
-    editTodo: function(todoId) {
-
+    viewList: function(id) {
+        return null;
     },
 
     notFound: function(path) {
-        return <div class="not-found">Uh oh. You've arrived somewhere that doesn't exist.</div>;
+        return <div class="not-found">Uh oh. {path} doesn't exist.</div>;
     }
 
 });

@@ -1,4 +1,6 @@
 var React = require('react'),
+    Fluxxor = require('fluxxor'),
+    RouterMixin = require('./../../../lib/RouterMixin'),
     _map = require('lodash-node/modern/collections/map');
 
 var TodoList = React.createClass({
