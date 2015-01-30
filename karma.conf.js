@@ -16,7 +16,7 @@ module.exports = function(config) {
         },
 
         preprocessors: {
-            'test/browser/**/*.test.js': ['browserify']
+            'test/client/**/*.test.js': ['browserify']
         },
 
         reporters: ['progress'],
