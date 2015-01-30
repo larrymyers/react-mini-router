@@ -7,20 +7,38 @@ var TodoList = React.createClass({
 
 	mixins: [RouterMixin, Fluxxor.FluxMixin(React)],
 
+	routes: {
+		'/': 'showAll',
+		'/create': 'createTodo',
+		'/edit/:id': 'editTodo'
+	},
+
     render: function () {
 	    var list = this.props.list;
 
         return (
 	        <div>
 		        <h2>{list.name}</h2>
-	            <ul>
-	            {_map(list.todos, function(todo) {
-	                return <li key={todo.id}>{todo.text}</li>;
-	            })}
-	            </ul>
+	            {this.renderCurrentRoute()}
 	        </div>
         );
-    }
+    },
+
+	showAll: function() {
+		var list = this.props.list;
+
+		return (
+			<ul>
+	            {_map(list.todos, function(todo) {
+		            return <li key={todo.id}>{todo.text}</li>;
+	            })}
+			</ul>
+		)
+	},
+
+	createTodo: function() {
+		return null;
+	}
 
 });
 

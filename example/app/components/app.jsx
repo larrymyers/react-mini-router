@@ -46,7 +46,7 @@ var App = React.createClass({
 		    return null;
 	    });
 
-        return <TodoList list={list}/>;
+        return <TodoList list={list} root={this.state.path}/>;
     },
 
     notFound: function(path) {

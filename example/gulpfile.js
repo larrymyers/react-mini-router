@@ -45,7 +45,6 @@ gulp.task('watch', function() {
 gulp.task('serve', ['browserify', 'watch'], function() {
     nodemon({
         script: 'server.js',
-        args: ['--environment=DEV', '--port=8000'],
         watch: ['app']
     });
 });
