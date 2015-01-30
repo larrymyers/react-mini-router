@@ -5,13 +5,20 @@ var React = require('react'),
 
 var TodoList = React.createClass({
 
+	mixins: [RouterMixin, Fluxxor.FluxMixin(React)],
+
     render: function () {
+	    var list = this.props.list;
+
         return (
-            <ul>
-            {_map(this.props.todos, function(todo) {
-                return <li key={todo.id}>{todo.text}</li>;
-            })}
-            </ul>
+	        <div>
+		        <h2>{list.name}</h2>
+	            <ul>
+	            {_map(list.todos, function(todo) {
+	                return <li key={todo.id}>{todo.text}</li>;
+	            })}
+	            </ul>
+	        </div>
         );
     }
 

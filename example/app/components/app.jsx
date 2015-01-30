@@ -28,7 +28,11 @@ var App = React.createClass({
             <div>
                 <ul className="lists list-group">
                 {this.state.lists.map(function(list) {
-                    return <li className="list-group-item" key={list.id}>{list.name}</li>;
+                    return (
+	                    <li className="list-group-item" key={list.id}>
+                            <a href={'/lists/' + list.id}>{list.name}</a>
+                        </li>
+                    );
                 })}
                 </ul>
                 <CreateTodoList/>
@@ -37,7 +41,12 @@ var App = React.createClass({
     },
 
     viewList: function(id) {
-        return null;
+	    var list = this.state.lists.reduce(function(found, list) {
+		    if (list.id == id) { return list; }
+		    return null;
+	    });
+
+        return <TodoList list={list}/>;
     },
 
     notFound: function(path) {
