@@ -1,6 +1,7 @@
 var React = require('react'),
     Fluxxor = require('fluxxor'),
     RouterMixin = require('./../../../lib/RouterMixin'),
+    CreateTodo = require('./createtodo'),
     _map = require('lodash-node/modern/collections/map');
 
 var TodoList = React.createClass({
@@ -28,12 +29,15 @@ var TodoList = React.createClass({
 		var list = this.props.list;
 
 		return (
-			<ul>
+            <div>
+                <ul>
 	            {_map(list.todos, function(todo) {
-		            return <li key={todo.id}>{todo.text}</li>;
-	            })}
-			</ul>
-		)
+                    return <li key={todo.id}>{todo.text}</li>;
+                })}
+                </ul>
+                <CreateTodo list={list}/>
+            </div>
+		);
 	},
 
 	createTodo: function() {

@@ -18,8 +18,14 @@ nav a:first-child {
     max-width: 400px;
 }
 
-.lists li {
-    cursor: pointer;
+.lists .list-group-item {
+    padding: 0;
+}
+
+.lists .list-group-item a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
 }
 
 .create-list-input {

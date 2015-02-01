@@ -14,8 +14,8 @@ module.exports = {
 
     },
 
-    createTodo: function(data, callback) {
-        request.post(host + '/api/todos/').send(data).end(function(res) {
+    createTodo: function(list, data, callback) {
+        request.post(host + '/api/lists/' + list.id + '/todos/').send(data).end(function(res) {
             callback(null, res.body);
         });
     },

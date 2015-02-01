@@ -1,7 +1,7 @@
 var Fluxxor = require('fluxxor'),
     constants = require('./constants'),
     _remove = require('lodash-node/modern/arrays/remove'),
-    _findIndex = require('lodash-node/modern/arrays/findIndex');
+    _find = require('lodash-node/modern/collections/find');
 
 module.exports = Fluxxor.createStore({
     initialize: function(options) {
@@ -26,6 +26,9 @@ module.exports = Fluxxor.createStore({
     },
 
     onAddTodo: function(payload) {
+        var list = _find(this.lists, { id: payload.listId });
+        list.todos.push(payload.todo);
+        this.emit('change');
     },
 
     onUpdateTodo: function(payload) {

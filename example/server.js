@@ -65,10 +65,10 @@ app.delete('/api/lists/:listId', function deleteList(req, res) {
 });
 
 app.post('/api/lists/:listId/todos/', function createTodo(req, res) {
-    var list = _find(todoLists, { id: req.params.listId }),
+    var list = _find(todoLists, { id: parseInt(req.params.listId) }),
         todo = req.body;
 
-    todo.id = list.length + 1;
+    todo.id = list.todos.length + 1;
     list.todos.push(todo);
 
     res.send(todo);

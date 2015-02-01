@@ -13,8 +13,11 @@ module.exports = {
         this.dispatch(constants.DELETE_LIST, { id: id });
     },
 
-    addTodo: function(text) {
-        this.dispatch(constants.ADD_TODO, { text: text });
+    addTodo: function(list, text) {
+        var self = this;
+        todoService.createTodo(list, { text: text }, function(err, todo) {
+            self.dispatch(constants.ADD_TODO, { listId: list.id, todo: todo });
+        });
     },
 
     updateTodo: function(todo) {

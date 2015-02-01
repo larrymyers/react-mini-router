@@ -50,7 +50,7 @@ var App = React.createClass({
     },
 
     notFound: function(path) {
-        return <div class="not-found">Uh oh. {path} doesn't exist.</div>;
+        return <div className="not-found">Uh oh. {path} doesn't exist.</div>;
     }
 
 });
