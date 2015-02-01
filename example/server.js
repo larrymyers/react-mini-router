@@ -16,6 +16,16 @@ var fs = require('fs'),
 var app = express(),
     todoLists = [];
 
+try {
+    todoLists = JSON.parse(fs.readFileSync('db.json', 'utf8'));
+} catch(e) {
+    // no saved data yet, just continue
+}
+
+function saveDB(callback) {
+    fs.writeFile('db.json', JSON.stringify(todoLists, null, 4), 'utf8', callback);
+}
+
 app.use(bodyParser.json());
 
 // PAGES
@@ -54,14 +64,18 @@ app.post('/api/lists/', function createList(req, res) {
     _defaults(list, { name: 'New List', todos: [] });
     todoLists.push(list);
 
-    res.status(201).send(list);
+    saveDB(function() {
+        res.status(201).send(list);
+    });
 });
 
 app.delete('/api/lists/:listId', function deleteList(req, res) {
     var listId = req.params.listId,
         removedList = _remove(todoLists, { id: listId });
 
-    res.send(removedList);
+    saveDB(function() {
+        res.send(removedList);
+    });
 });
 
 app.post('/api/lists/:listId/todos/', function createTodo(req, res) {
@@ -71,7 +85,9 @@ app.post('/api/lists/:listId/todos/', function createTodo(req, res) {
     todo.id = list.todos.length + 1;
     list.todos.push(todo);
 
-    res.send(todo);
+    saveDB(function() {
+        res.send(todo);
+    });
 });
 
 app.put('/api/lists/:listName/todos/:todoId', function updateTodo(req, res) {
@@ -82,7 +98,9 @@ app.put('/api/lists/:listName/todos/:todoId', function updateTodo(req, res) {
 
     _extend(todo, props);
 
-    res.send(todo);
+    saveDB(function() {
+        res.send(todo);
+    });
 });
 
 app.delete('/api/lists/:listName/todos/:todoId', function deleteTodo(req, res) {
@@ -90,7 +108,9 @@ app.delete('/api/lists/:listName/todos/:todoId', function deleteTodo(req, res) {
         todoId = parseInt(req.params.id),
         removed = _remove(list.todos, { id: todoId });
 
-    res.send(removed);
+    saveDB(function() {
+        res.send(removed);
+    });
 });
 
 app.use(express.static(path.join(__dirname, 'public')));

@@ -1,3 +1,4 @@
 app/components/*.js
 node_modules
 public/js/app.js
+db.json

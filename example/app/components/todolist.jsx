@@ -18,9 +18,12 @@ var TodoList = React.createClass({
 	    var list = this.props.list;
 
         return (
-	        <div>
+	        <div className="todolist">
 		        <h2>{list.name}</h2>
 	            {this.renderCurrentRoute()}
+                <footer>
+                    <a href="/">Back to All Lists</a>
+                </footer>
 	        </div>
         );
     },
@@ -30,9 +33,9 @@ var TodoList = React.createClass({
 
 		return (
             <div>
-                <ul>
+                <ul className="list-group">
 	            {_map(list.todos, function(todo) {
-                    return <li key={todo.id}>{todo.text}</li>;
+                    return <li className="list-group-item" key={todo.id}>{todo.text}</li>;
                 })}
                 </ul>
                 <CreateTodo list={list}/>

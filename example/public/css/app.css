@@ -14,7 +14,7 @@ nav a:first-child {
     margin-top: 25px;
 }
 
-.lists {
+.lists, .todolist {
     max-width: 400px;
 }
 
@@ -30,4 +30,8 @@ nav a:first-child {
 
 .create-list-input {
     margin-right: 15px;
+}
+
+.todolist footer {
+    margin-top: 30px;
 }
