@@ -43,7 +43,7 @@ var App = React.createClass({
     viewList: function(id) {
 	    var list = this.state.lists.reduce(function(found, list) {
 		    if (list.id == id) { return list; }
-		    return null;
+		    return found;
 	    });
 
         return <TodoList list={list} root={this.state.path}/>;
