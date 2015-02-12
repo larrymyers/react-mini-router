@@ -41,7 +41,7 @@ module.exports = {
     getInitialState: function() {
         return {
             path: getInitialPath(this),
-            root: this.context.path || this.props.root || '',
+            root: this.props.root || this.context.path || '',
             useHistory: (this.props.history || this.context.useHistory) && detect.hasPushState
         };
     },
