@@ -10,7 +10,7 @@ var App = React.createClass({
 
     routes: {
         '/': 'viewAllLists',
-        '/lists/:id': 'viewList'
+        '/lists/:id/:nested*': 'viewList'
     },
 
     mixins: [RouterMixin, FluxMixin, StoreWatchMixin('TodoStore')],
@@ -30,7 +30,7 @@ var App = React.createClass({
                 {this.state.lists.map(function(list) {
                     return (
 	                    <li className="list-group-item" key={list.id}>
-                            <a href={'/lists/' + list.id}>{list.name}</a>
+                            <a href={'/lists/' + list.id + '/'}>{list.name}</a>
                         </li>
                     );
                 })}
@@ -46,7 +46,7 @@ var App = React.createClass({
 		    return found;
 	    });
 
-        return <TodoList list={list} root={this.state.path}/>;
+        return <TodoList list={list} root={'/lists/' + id}/>;
     },
 
     notFound: function(path) {
