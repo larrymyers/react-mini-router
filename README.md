@@ -140,7 +140,21 @@ If you want to update the address bar url, but not trigger routing:
 
 ## Server Rendering
 
+See the [example](./example) app for how to approach server rendering. The short answer
+is that for every url the server must render you should provide the necessary data
+to the root Component as props, including the `path` property.
+
+[React.renderToString](http://facebook.github.io/react/docs/top-level-api.html#react.rendertostring)
+does not trigger the Component lifecycle methods, so you must do all async data loading outside
+of the render process.
+
 ## Nested Routers
+
+Nested routers are supported, though it requires some manual work. The `root` property must
+be explicitly passed to the nested router, which sets the base url where it will be mounted.
+
+You also need to provide a wildcard param at the end of any routes that will call route handlers
+that contain a nested router. The [example](./example) app and tests show how to do this.
 
 ## Alternatives
 
