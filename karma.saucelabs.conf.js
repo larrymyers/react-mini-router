@@ -1,3 +1,9 @@
+/**
+ *  Prerequistes:
+ *
+ *  1. Sauce Connect already running
+ *  2. SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set
+ */
 module.exports = function(config) {
 
     var customLaunchers = {
