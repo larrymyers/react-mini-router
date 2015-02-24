@@ -6,6 +6,8 @@
  */
 module.exports = function(config) {
 
+    require('./karma.conf')(config);
+
     var customLaunchers = {
         sl_chrome: {
             base: 'SauceLabs',
@@ -37,37 +39,15 @@ module.exports = function(config) {
     };
 
     config.set({
+        reporters: ['saucelabs'],
 
-        basePath: '',
-
-        files: [
-            'test/vendor/es5-shim.js',
-            'test/vendor/jquery-2.1.1.js',
-            'test/client/**/*.test.js'
-        ],
-
-        frameworks: ['mocha', 'browserify'],
-
-        browserify: {
-            debug: true
-        },
-
-        preprocessors: {
-            'test/client/**/*.test.js': ['browserify']
-        },
-
-        reporters: ['progress', 'saucelabs'],
-
-        port: 9876,
-        colors: true,
-        logLevel: config.LOG_INFO,
-        autoWatch: false,
         sauceLabs: {
             testName: 'react-mini-router client tests',
             startConnect: false
         },
+
         customLaunchers: customLaunchers,
-        browsers: Object.keys(customLaunchers),
-        singleRun: true
+
+        browsers: Object.keys(customLaunchers)
     });
 };
