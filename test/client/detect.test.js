@@ -1,3 +1,5 @@
+/* global describe:true, it:true */
+
 var assert = require('assert');
 
 describe('detect', function() {

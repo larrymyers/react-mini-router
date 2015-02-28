@@ -1,3 +1,5 @@
+/* global describe:true, it:true, beforeEach:true, afterEach:true */
+
 var assert = require('assert'),
     React = require('react'),
     RouterMixin = require('./../../lib/RouterMixin'),
@@ -21,6 +23,19 @@ describe('RouterMixin', function() {
     function setHash(url) {
         window.location.hash = '#!' + url;
     }
+
+    it('Should set the initial path to the root when there is no hash and no History API.', function(done) {
+        window.location.hash = '';
+
+        React.render(
+            App(),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.home').length, 1);
+        assert.equal($('.nested').length, 0);
+        done();
+    });
 
     it('Should render the matched route when the hash url changes.', function(done) {
         setHash('/');
