@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Includes bug fix from issue #22.
+
 ## 1.1.0
 
 * `path` state variable is always initialized when mixin is created.
