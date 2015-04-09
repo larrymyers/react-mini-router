@@ -161,9 +161,10 @@ function getInitialPath(component) {
         url = urllite(window.location.href);
 
         if (component.props.useHistory) {
-            path = url.pathname;
+            path = url.pathname + url.search;
         } else if (url.hash) {
-            path = urllite(url.hash.slice(2)).pathname;
+            hash = urllite(url.hash.slice(2));
+            path = hash.pathname + hash.search;
         }
     }
 
