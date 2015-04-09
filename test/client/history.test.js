@@ -37,6 +37,19 @@ describe('RouterMixin', function() {
         done();
     });
 
+    it('Should set the initial path to the hash with query params.', function(done) {
+        setHash('/search?q=1');
+
+        React.render(
+            App(),
+            $('.app').get(0)
+        );
+
+        assert.equal($('.search').length, 1);
+        assert.equal($('.search').text(), '1');
+        done();
+    });
+
     it('Should render the matched route when the hash url changes.', function(done) {
         setHash('/');
 
@@ -79,7 +92,8 @@ var AppClass = React.createClass({
 
     routes: {
         '/': 'home',
-        '/nested/:path*': 'nestedApp'
+        '/nested/:path*': 'nestedApp',
+        '/search': 'search'
     },
 
     render: function() {
@@ -92,6 +106,10 @@ var AppClass = React.createClass({
 
     nestedApp: function() {
         return NestedApp({ root: '/nested' });
+    },
+
+    search: function(params) {
+        return React.DOM.div({ className: 'search' }, params.q);
     }
 
 });
