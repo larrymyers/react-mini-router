@@ -1,6 +1,6 @@
 {
   "name": "react-mini-router",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
