@@ -1,3 +1,7 @@
+## 1.1.3
+
+* Includes bug fix from issue #26.
+
 ## 1.1.2
 
 * Includes bug fix from issue #24.
