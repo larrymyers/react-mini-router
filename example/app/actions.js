@@ -20,8 +20,8 @@ module.exports = {
         });
     },
 
-    updateTodo: function(todo) {
-        this.dispatch(constants.UPDATE_TODO, { todo: todo });
+    updateTodo: function(list, todo) {
+        this.dispatch(constants.UPDATE_TODO, { listId: list.id, todo: todo });
     },
 
     removeTodo: function(todo) {

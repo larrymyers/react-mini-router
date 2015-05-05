@@ -2,8 +2,8 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     RouterMixin = require('./../../../lib/RouterMixin'),
     CreateTodo = require('./createtodo'),
-    _find = require('lodash-node/modern/collections/find'),
-    _map = require('lodash-node/modern/collections/map');
+    _find = require('lodash/collection/find'),
+    _map = require('lodash/collection/map');
 
 var TodoList = React.createClass({
 
@@ -64,7 +64,9 @@ var TodoList = React.createClass({
 		);
 	},
 
-    saveTodo: function(id) {
+    saveTodo: function(id, evt) {
+        evt.preventDefault();
+
         var list = this.props.list,
             todo = _find(list.todos, { id: id });
 

@@ -48,6 +48,8 @@ module.exports = function(config) {
 
         customLaunchers: customLaunchers,
 
-        browsers: Object.keys(customLaunchers)
+        browsers: Object.keys(customLaunchers),
+
+        singleRun: true
     });
 };

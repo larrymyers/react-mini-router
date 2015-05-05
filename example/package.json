@@ -13,19 +13,19 @@
     "body-parser": "^1.5.2",
     "express": "^4.7.2",
     "fluxxor": "^1.5.0",
-    "lodash-node": "^2.4.1",
+    "lodash": "^3.0.0",
     "plates": "^0.4.9",
     "react": "^0.12.0",
     "superagent": "^0.18.2"
   },
   "devDependencies": {
-    "browserify": "^8.1.1",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-changed": "^1.1.0",
     "gulp-nodemon": "^1.0.5",
     "gulp-react": "^2.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1"
+    "webpack": "^1.8.11",
+    "webpack-dev-middleware": "^1.0.11"
   }
 }

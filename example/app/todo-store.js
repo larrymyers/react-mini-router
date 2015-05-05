@@ -1,7 +1,8 @@
 var Fluxxor = require('fluxxor'),
     constants = require('./constants'),
-    _remove = require('lodash-node/modern/arrays/remove'),
-    _find = require('lodash-node/modern/collections/find');
+    _remove = require('lodash/array/remove'),
+    _find = require('lodash/collection/find'),
+    _findIndex = require('lodash/array/findIndex');
 
 module.exports = Fluxxor.createStore({
     initialize: function(options) {
@@ -32,6 +33,13 @@ module.exports = Fluxxor.createStore({
     },
 
     onUpdateTodo: function(payload) {
+        var list = _find(this.lists, { id: payload.listId }),
+            idx = _findIndex(list.todos, { id: payload.todo.id });
+
+        if (idx > -1) {
+            list.todos[idx] = payload.todo;
+            this.emit('change');
+        }
     },
 
     onRemoveTodo: function(payload) {
