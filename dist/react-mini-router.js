@@ -6,6 +6,7 @@ module.exports = {
 },{"./lib/RouterMixin":2,"./lib/navigate":4}],2:[function(require,module,exports){
 (function (global){
 var React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
+    EventListener = require('react/lib/EventListener'),
     pathToRegexp = require('path-to-regexp'),
     urllite = require('urllite/lib/core'),
     detect = require('./detect');
@@ -51,27 +52,25 @@ module.exports = {
     },
 
     componentDidMount: function() {
-        this.getDOMNode().addEventListener('click', this.handleClick, false);
+        var _events = this._events = [];
+
+        _events.push(EventListener.listen(this.getDOMNode(), 'click', this.handleClick));
 
         if (this.state.useHistory) {
-            window.addEventListener('popstate', this.onPopState, false);
+            _events.push(EventListener.listen(window, 'popstate', this.onPopState));
         } else {
             if (window.location.hash.indexOf('#!') === -1) {
                 window.location.hash = '#!/';
             }
 
-            window.addEventListener('hashchange', this.onPopState, false);
+            _events.push(EventListener.listen(window, 'hashchange', this.onPopState));
         }
     },
 
     componentWillUnmount: function() {
-        this.getDOMNode().removeEventListener('click', this.handleClick);
-
-        if (this.state.useHistory) {
-            window.removeEventListener('popstate', this.onPopState);
-        } else {
-            window.removeEventListener('hashchange', this.onPopState);
-        }
+        this._events.forEach(function(listener) {
+           listener.remove();
+        });
     },
 
     onPopState: function() {
@@ -131,7 +130,9 @@ module.exports = {
     },
 
     matchRoute: function(path) {
-        if (!path) return false;
+        if (!path) {
+            return false;
+        }
 
         var matchedRoute = {};
 
@@ -155,6 +156,7 @@ module.exports = {
 
 function getInitialPath(component) {
     var path = component.props.path || component.context.path,
+        hash,
         url;
 
     if (!path && detect.canUseDOM) {
@@ -249,7 +251,7 @@ function parseSearch(str) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./detect":3,"path-to-regexp":5,"urllite/lib/core":7}],3:[function(require,module,exports){
+},{"./detect":3,"path-to-regexp":6,"react/lib/EventListener":8,"urllite/lib/core":10}],3:[function(require,module,exports){
 var canUseDOM = !!(
     typeof window !== 'undefined' &&
     window.document &&
@@ -279,6 +281,66 @@ module.exports = function triggerUrl(url, silent) {
 };
 
 },{"./detect":3}],5:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    draining = true;
+    var currentQueue;
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        var i = -1;
+        while (++i < len) {
+            currentQueue[i]();
+        }
+        len = queue.length;
+    }
+    draining = false;
+}
+process.nextTick = function (fun) {
+    queue.push(fun);
+    if (!draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],6:[function(require,module,exports){
 var isArray = require('isarray');
 
 /**
@@ -482,12 +544,136 @@ function pathToRegexp (path, keys, options) {
   return attachKeys(new RegExp('^' + route, flags(options)), keys);
 }
 
-},{"isarray":6}],6:[function(require,module,exports){
+},{"isarray":7}],7:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014 Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @providesModule EventListener
+ * @typechecks
+ */
+
+var emptyFunction = require("./emptyFunction");
+
+/**
+ * Upstream version of event listener. Does not take into account specific
+ * nature of platform.
+ */
+var EventListener = {
+  /**
+   * Listen to DOM events during the bubble phase.
+   *
+   * @param {DOMEventTarget} target DOM element to register listener on.
+   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+   * @param {function} callback Callback function.
+   * @return {object} Object with a `remove` method.
+   */
+  listen: function(target, eventType, callback) {
+    if (target.addEventListener) {
+      target.addEventListener(eventType, callback, false);
+      return {
+        remove: function() {
+          target.removeEventListener(eventType, callback, false);
+        }
+      };
+    } else if (target.attachEvent) {
+      target.attachEvent('on' + eventType, callback);
+      return {
+        remove: function() {
+          target.detachEvent('on' + eventType, callback);
+        }
+      };
+    }
+  },
+
+  /**
+   * Listen to DOM events during the capture phase.
+   *
+   * @param {DOMEventTarget} target DOM element to register listener on.
+   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+   * @param {function} callback Callback function.
+   * @return {object} Object with a `remove` method.
+   */
+  capture: function(target, eventType, callback) {
+    if (!target.addEventListener) {
+      if ("production" !== process.env.NODE_ENV) {
+        console.error(
+          'Attempted to listen to events during the capture phase on a ' +
+          'browser that does not support the capture phase. Your application ' +
+          'will not receive some events.'
+        );
+      }
+      return {
+        remove: emptyFunction
+      };
+    } else {
+      target.addEventListener(eventType, callback, true);
+      return {
+        remove: function() {
+          target.removeEventListener(eventType, callback, true);
+        }
+      };
+    }
+  },
+
+  registerDefault: function() {}
+};
+
+module.exports = EventListener;
+
+}).call(this,require('_process'))
+},{"./emptyFunction":9,"_process":5}],9:[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule emptyFunction
+ */
+
+function makeEmptyFunction(arg) {
+  return function() {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+function emptyFunction() {}
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function() { return this; };
+emptyFunction.thatReturnsArgument = function(arg) { return arg; };
+
+module.exports = emptyFunction;
+
+},{}],10:[function(require,module,exports){
 (function() {
   var URL, URL_PATTERN, defaults, urllite,
     __hasProp = {}.hasOwnProperty;
