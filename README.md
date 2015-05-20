@@ -18,7 +18,7 @@ util method to programmatically trigger routes.
 Its only dependencies are [path-to-regexp](https://github.com/component/path-to-regexp),
 [urllite](https://github.com/hzdg/urllite.js) and React >= 0.12.0.
 
-The complete browser build is 8.4kb minified and 3.1kb minified and gzipped.
+The complete browser build is 7.6kb minified and 3.2kb minified and gzipped.
 
 See the [example](./example) app for a complete solution that includes server side rendering
 and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
