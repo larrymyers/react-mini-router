@@ -11,9 +11,10 @@ describe('detect', function() {
     });
 
     it('Should detect if HTML5 History API is available.', function() {
-        var isIE9 = navigator.userAgent.indexOf('MSIE 9') > -1;
+        var isIE9 = navigator.userAgent.indexOf('MSIE 9') > -1,
+            isIE8 = navigator.userAgent.indexOf('MSIE 8') > -1;
 
-        assert.ok(detect.hasPushState !== isIE9);
+        assert.ok(detect.hasPushState !== (isIE9 || isIE8));
     });
 
     it('Should detect if it is in hashbang url mode.', function() {

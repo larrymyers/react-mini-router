@@ -6,8 +6,10 @@ module.exports = function(config) {
         basePath: '',
 
         files: [
+            'node_modules/console-polyfill/index.js',
             'test/vendor/es5-shim.js',
-            'test/vendor/jquery-2.1.1.js',
+            'test/vendor/es5-sham.js',
+            'test/vendor/jquery-1.11.3.js',
             'test/client/**/*.test.js'
         ],
 
