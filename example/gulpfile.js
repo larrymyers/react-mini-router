@@ -1,8 +1,6 @@
 var gulp = require('gulp'),
     del = require('del'),
     changed = require('gulp-changed'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
     reactTransform = require('gulp-react'),
     source = require('vinyl-source-stream'),
     nodemon = require('gulp-nodemon');
@@ -21,20 +19,6 @@ gulp.task('react', function() {
         .pipe(gulp.dest('./app/components/'));
 });
 
-var bundler = createDevBundler()
-    .on('update', function(ids) {
-        if (ids) {
-            console.log('Browserify', ids);
-        }
-
-        generateDevBundle();
-    })
-    .on('log', function(msg) {
-        console.log('Browserify: ' + msg);
-    });
-
-gulp.task('browserify', ['react'], generateDevBundle);
-
 gulp.task('watch', function() {
     gulp.watch(['app/components/**/*.jsx'], ['react'])
         .on('change', function(event) {
@@ -42,22 +26,9 @@ gulp.task('watch', function() {
         });
 });
 
-gulp.task('serve', ['browserify', 'watch'], function() {
+gulp.task('serve', ['react', 'watch'], function() {
     nodemon({
         script: 'server.js',
         watch: ['app']
     });
 });
-
-function createDevBundler() {
-    var opts = watchify.args;
-    opts.debug = true;
-
-    return watchify(browserify('./app/main.js', opts));
-}
-
-function generateDevBundle() {
-    return bundler.bundle()
-        .pipe(source('app.js'))
-        .pipe(gulp.dest('./public/js/'));
-}

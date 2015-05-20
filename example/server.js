@@ -4,10 +4,11 @@ var fs = require('fs'),
     bodyParser = require('body-parser'),
     React = require('react'),
     plates = require('plates'),
-    _find = require('lodash-node/modern/collections/find'),
-    _remove = require('lodash-node/modern/arrays/remove'),
-    _extend = require('lodash-node/modern/objects/assign'),
-    _defaults = require('lodash-node/modern/objects/defaults'),
+    _find = require('lodash/collection/find'),
+    _remove = require('lodash/array/remove'),
+    _cloneDeep = require('lodash/lang/cloneDeep'),
+    _extend = require('lodash/object/assign'),
+    _defaults = require('lodash/object/defaults'),
     Fluxxor = require('fluxxor'),
     TodoStore = require('./app/todo-store'),
     actions = require('./app/actions'),
@@ -24,6 +25,17 @@ try {
 
 function saveDB(callback) {
     fs.writeFile('db.json', JSON.stringify(todoLists, null, 4), 'utf8', callback);
+}
+
+if (process.env.NODE_ENV !== 'production') {
+    var webpackDevMiddleware = require('webpack-dev-middleware'),
+        webpack = require('webpack'),
+        webpackConfig = _cloneDeep(require('./webpack.config'));
+
+    webpackConfig.debug = true;
+    webpackConfig.devtool = 'eval';
+
+    app.use(webpackDevMiddleware(webpack(webpackConfig), { stats: false }));
 }
 
 app.use(bodyParser.json());

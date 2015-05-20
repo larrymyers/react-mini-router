@@ -1,3 +1,5 @@
+var webpackConfig = require('./webpack.config');
+
 module.exports = function(config) {
     config.set({
 
@@ -11,23 +13,24 @@ module.exports = function(config) {
             'test/client/**/*.test.js'
         ],
 
-        frameworks: ['mocha', 'browserify'],
-
-        browserify: {
-            debug: true
-        },
+        frameworks: ['mocha'],
 
         preprocessors: {
-            'test/client/**/*.test.js': ['browserify']
+            'test/client/**/*.test.js': ['webpack']
         },
 
         reporters: ['progress'],
 
-        port: 9876,
-        colors: true,
-        logLevel: config.LOG_INFO,
-        autoWatch: false,
-        browsers: ['PhantomJS'],
-        singleRun: true
+        webpack: {
+            debug: true,
+            devtool: 'eval'
+        },
+
+        webpackMiddleware: {
+            stats: false
+        },
+
+        autoWatch: true,
+        browsers: ['PhantomJS']
     });
 };

@@ -4,8 +4,8 @@
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
-    "build": "browserify -e index.js -t browserify-shim -s ReactMiniRouter > dist/react-mini-router.js",
-    "dist": "uglifyjs dist/react-mini-router.js > dist/react-mini-router.min.js",
+    "build": "webpack",
+    "dist": "webpack -p --output-file=react-mini-router.min.js",
     "test": "npm run test-client && npm run test-server",
     "test-client": "karma start --single-run",
     "test-server": "mocha test/server/**/*.test.js"
@@ -27,27 +27,23 @@
   "peerDependencies": {
     "react": ">=0.12.0"
   },
-  "browserify-shim": {
-    "react": "global:React"
-  },
   "dependencies": {
     "path-to-regexp": "^1.0.1",
     "urllite": "^0.5.0"
   },
   "devDependencies": {
-    "browserify": "^8.1.0",
-    "browserify-shim": "^3.8.2",
     "cheerio": "^0.18.0",
     "console-polyfill": "^0.2.1",
     "karma": "^0.12.21",
-    "karma-browserify": "^2.0.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-cli": "0.0.4",
     "karma-mocha": "^0.1.10",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-sauce-launcher": "^0.2.10",
+    "karma-webpack": "^1.5.0",
     "mocha": "^2.1.0",
     "react": "^0.12.0",
-    "uglify-js": "^2.4.15"
+    "uglify-js": "^2.4.15",
+    "webpack": "^1.8.11"
   }
 }
