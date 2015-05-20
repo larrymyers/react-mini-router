@@ -1,3 +1,9 @@
+var webpack = require('webpack'),
+    util = require('util'),
+    pkg = require('./package.json');
+
+var bannerString = util.format('ReactMiniRouter %s - https://github.com/larrymyers/react-mini-router', pkg.version);
+
 module.exports = {
     entry: {
         main: './index.js'
@@ -10,5 +16,8 @@ module.exports = {
     },
     externals: {
         react: 'React'
-    }
+    },
+    plugins: [
+        new webpack.BannerPlugin(bannerString, { entryOnly: true })
+    ]
 };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dist": "uglifyjs dist/react-mini-router.js > dist/react-mini-router.min.js",
+    "dist": "webpack -p --output-file=react-mini-router.min.js",
     "test": "npm run test-client && npm run test-server",
     "test-client": "karma start --single-run",
     "test-server": "mocha test/server/**/*.test.js"
@@ -26,9 +26,6 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=0.12.0"
-  },
-  "browserify-shim": {
-    "react": "global:React"
   },
   "dependencies": {
     "path-to-regexp": "^1.0.1",
