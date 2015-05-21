@@ -1,3 +1,7 @@
+## 1.1.5
+
+* New build using webpack instead of browserify. No new functionality or bug fixes.
+
 ## 1.1.4
 
 * Includes bug fix from issue #29.
