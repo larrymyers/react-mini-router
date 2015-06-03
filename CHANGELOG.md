@@ -1,3 +1,7 @@
+## 1.1.6
+
+* Includes bug fix from issue #34. `navigate` now cross browser compatible for older versions of IE.
+
 ## 1.1.5
 
 * New build using webpack instead of browserify. No new functionality or bug fixes.
