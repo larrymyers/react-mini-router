@@ -156,6 +156,19 @@ be explicitly passed to the nested router, which sets the base url where it will
 You also need to provide a wildcard param at the end of any routes that will call route handlers
 that contain a nested router. The [example](./example) app and tests show how to do this.
 
+## Running the Example App
+
+The [example](./example) app demonstrates how to use react-mini-router for client and server
+side rendering. To run the app do the following:
+
+    cd example
+    npm install
+    gulp serve
+    
+Then open a new browser window to:
+
+    http://localhost:4000
+
 ## Alternatives
 
 * [React Router](https://github.com/rackt/react-router)
