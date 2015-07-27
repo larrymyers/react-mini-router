@@ -1,3 +1,7 @@
+## 1.1.7
+
+* Includes bug fix from issue #37. Intercepting clicks on links with routes urls now works correctly in IE 8.
+
 ## 1.1.6
 
 * Includes bug fix from issue #34. `navigate` now cross browser compatible for older versions of IE.

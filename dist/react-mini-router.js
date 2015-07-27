@@ -1,4 +1,4 @@
-/*! ReactMiniRouter 1.1.6 - https://github.com/larrymyers/react-mini-router */
+/*! ReactMiniRouter 1.1.7 - https://github.com/larrymyers/react-mini-router */
 var ReactMiniRouter =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -57,8 +57,9 @@ var ReactMiniRouter =
 
 	var React = __webpack_require__(3),
 	    EventListener = __webpack_require__(7),
+	    getEventTarget = __webpack_require__(8),
 	    pathToRegexp = __webpack_require__(6),
-	    urllite = __webpack_require__(8),
+	    urllite = __webpack_require__(9),
 	    detect = __webpack_require__(4);
 
 	var PropValidation = {
@@ -236,7 +237,7 @@ var ReactMiniRouter =
 	        return;
 	    }
 
-	    var elt = evt.target;
+	    var elt = getEventTarget(evt);
 
 	    // Since a click could originate from a child element of the <a> tag,
 	    // walk back up the tree to find it.
@@ -373,7 +374,7 @@ var ReactMiniRouter =
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(10);
+	var isArray = __webpack_require__(11);
 
 	/**
 	 * Expose `pathToRegexp`.
@@ -600,7 +601,7 @@ var ReactMiniRouter =
 	 * @typechecks
 	 */
 
-	var emptyFunction = __webpack_require__(9);
+	var emptyFunction = __webpack_require__(10);
 
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -668,10 +669,45 @@ var ReactMiniRouter =
 
 	module.exports = EventListener;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
 /* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule getEventTarget
+	 * @typechecks static-only
+	 */
+
+	"use strict";
+
+	/**
+	 * Gets the target node from a native browser event by accounting for
+	 * inconsistencies in browser DOM APIs.
+	 *
+	 * @param {object} nativeEvent Native browser event.
+	 * @return {DOMEventTarget} Target node.
+	 */
+	function getEventTarget(nativeEvent) {
+	  var target = nativeEvent.target || nativeEvent.srcElement || window;
+	  // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
+	  // @see http://www.quirksmode.org/js/events_properties.html
+	  return target.nodeType === 3 ? target.parentNode : target;
+	}
+
+	module.exports = getEventTarget;
+
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function() {
@@ -742,7 +778,7 @@ var ReactMiniRouter =
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -780,7 +816,7 @@ var ReactMiniRouter =
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -789,7 +825,7 @@ var ReactMiniRouter =
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// shim for using process in browser
