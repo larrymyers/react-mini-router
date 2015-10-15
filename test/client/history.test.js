@@ -2,6 +2,7 @@
 
 var assert = require('assert'),
     React = require('react'),
+    ReactDOM = require('react-dom'),
     RouterMixin = require('./../../lib/RouterMixin'),
     navigate = require('./../../lib/navigate');
 
@@ -15,7 +16,7 @@ describe('RouterMixin', function() {
 
     afterEach(function() {
         var $root = $('.app');
-        React.unmountComponentAtNode($root.get(0));
+        ReactDOM.unmountComponentAtNode($root.get(0));
         $root.remove();
         setHash('');
     });
@@ -27,7 +28,7 @@ describe('RouterMixin', function() {
     it('Should set the initial path to the root when there is no hash and no History API.', function(done) {
         window.location.hash = '';
 
-        React.render(
+        ReactDOM.render(
             App(),
             $('.app').get(0)
         );
@@ -40,7 +41,7 @@ describe('RouterMixin', function() {
     it('Should set the initial path to the hash with query params.', function(done) {
         setHash('/search?q=1');
 
-        React.render(
+        ReactDOM.render(
             App(),
             $('.app').get(0)
         );
@@ -53,7 +54,7 @@ describe('RouterMixin', function() {
     it('Should render the matched route when the hash url changes.', function(done) {
         setHash('/');
 
-        React.render(
+        ReactDOM.render(
             App(),
             $('.app').get(0)
         );
