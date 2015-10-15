@@ -15,7 +15,8 @@
     "fluxxor": "^1.5.0",
     "lodash": "^3.0.0",
     "plates": "^0.4.9",
-    "react": "^0.12.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "superagent": "^0.18.2"
   },
   "devDependencies": {

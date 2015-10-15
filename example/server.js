@@ -3,6 +3,7 @@ var fs = require('fs'),
     express = require('express'),
     bodyParser = require('body-parser'),
     React = require('react'),
+    ReactDOMServer = require('react-dom/server'),
     plates = require('plates'),
     _find = require('lodash/collection/find'),
     _remove = require('lodash/array/remove'),
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
         webpackConfig = _cloneDeep(require('./webpack.config'));
 
     webpackConfig.debug = true;
-    webpackConfig.devtool = 'eval';
+    webpackConfig.devtool = 'inline-source-map';
 
     app.use(webpackDevMiddleware(webpack(webpackConfig), { stats: false }));
 }
@@ -51,7 +52,7 @@ function renderApp(req, res) {
     };
 
     var flux = new Fluxxor.Flux(stores, require('./app/actions'));
-    var appHtml = React.renderToString(App({ path: req.path, flux: flux }));
+    var appHtml = ReactDOMServer.renderToString(App({ path: req.path, flux: flux }));
 
     fs.readFile(
         path.join(__dirname, 'public', 'index.html'),
