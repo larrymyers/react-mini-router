@@ -70,7 +70,7 @@ var TodoList = React.createClass({
         var list = this.props.list,
             todo = _find(list.todos, { id: id });
 
-        todo.text = this.refs.editInput.getDOMNode().value;
+        todo.text = this.refs.editInput.value;
 
         this.getFlux().actions.updateTodo(list, todo);
     }

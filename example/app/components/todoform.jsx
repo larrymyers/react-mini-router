@@ -11,7 +11,7 @@ var TodoForm = React.createClass({
     },
 
     componentDidUpdate: function() {
-        this.refs.textInput.getDOMNode().focus();
+        this.refs.textInput.focus();
     },
 
     render: function() {
@@ -25,7 +25,7 @@ var TodoForm = React.createClass({
 
     submit: function(evt) {
         evt.preventDefault();
-        var text = this.refs.textInput.getDOMNode().value;
+        var text = this.refs.textInput.value;
         this.getFlux().actions.addTodo(text);
         navigate('/');
     }
