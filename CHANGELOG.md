@@ -1,3 +1,7 @@
+## 2.0.0 
+
+* Supports React 0.14. Removed support for React <=0.13 due to introduction of react-dom.
+
 ## 1.1.7
 
 * Includes bug fix from issue #37. Intercepting clicks on links with routes urls now works correctly in IE 8.
