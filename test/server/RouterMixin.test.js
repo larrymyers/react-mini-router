@@ -1,4 +1,4 @@
-/* global describe:true, it:true */
+/* global describe, it */
 
 var assert = require('assert'),
     cheerio = require('cheerio'),
