@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -7,5 +8,8 @@ module.exports = {
     output: {
         path: path.resolve('./public'),
         filename: 'js/app.js'
+    },
+    resolve: {
+        root: ["node_modules"]
     }
 };
