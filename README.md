@@ -16,12 +16,15 @@ You can use regular anchor tags in your html markup to trigger navigation, or us
 util method to programmatically trigger routes. 
 
 Its only dependencies are [path-to-regexp](https://github.com/component/path-to-regexp),
-[urllite](https://github.com/hzdg/urllite.js) and React >= 0.12.0.
+[urllite](https://github.com/hzdg/urllite.js) and React >= 0.14.0.
 
-The complete browser build is 7.6kb minified and 3.2kb minified and gzipped.
+The complete browser build is 10kb minified and 4kb minified and gzipped.
 
 See the [example](./example) app for a complete solution that includes server side rendering
 and integrates with [Fluxxor](https://github.com/BinaryMuse/fluxxor) for Store/Dispatch functionality.
+
+**IMPORTANT** If you require React 0.13 or earlier, please install version 1.1.7. Version 2.0.0 
+requires React 0.14 or newer.
 
 ## Install
 

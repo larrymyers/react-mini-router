@@ -3,12 +3,13 @@
 var assert = require('assert'),
     cheerio = require('cheerio'),
     React = require('react'),
+    ReactDOMServer = require('react-dom/server'),
     RouterMixin = require('./../../lib/RouterMixin');
 
 describe('RouterMixin', function() {
 
     it('Should render the route that matches the path prop.', function() {
-        var html = React.renderToString(App({ path: '/search/foo' })),
+        var html = ReactDOMServer.renderToString(App({ path: '/search/foo' })),
             $ = cheerio.load(html);
 
         var $el = $('.search-results');
@@ -17,14 +18,14 @@ describe('RouterMixin', function() {
     });
 
     it('Should default path to the url root if it is not passed as a prop.', function() {
-        var html = React.renderToString(App()),
+        var html = ReactDOMServer.renderToString(App()),
             $ = cheerio.load(html);
 
         assert.equal($('.home').length, 1);
     });
 
     it('Should preprend an optional root to each route, and match on the resulting path.', function() {
-        var html = React.renderToString(App({ root: '/bar', path: '/bar/search/foo' })),
+        var html = ReactDOMServer.renderToString(App({ root: '/bar', path: '/bar/search/foo' })),
             $ = cheerio.load(html);
 
         var $el = $('.search-results');
@@ -33,7 +34,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should render the notFound handler if no matching route exists.', function() {
-        var html = React.renderToString(App({ path: '/bogus' })),
+        var html = ReactDOMServer.renderToString(App({ path: '/bogus' })),
             $ = cheerio.load(html);
 
         assert.equal($('.not-found').length, 1);
@@ -42,7 +43,7 @@ describe('RouterMixin', function() {
     it('Should throw an error if no route matches and a notFound handler does not exist.', function() {
         assert.throws(
             function() {
-                React.renderToString(AppWithoutNotFound({ path: '/bogus' }));
+                ReactDOMServer.renderToString(AppWithoutNotFound({ path: '/bogus' }));
             },
             /No route matched path: \/bogus/
         );
@@ -53,7 +54,7 @@ describe('RouterMixin', function() {
     });
 
     it('Should render the nested app.', function() {
-        var html = React.renderToString(App({ path: '/nested' })),
+        var html = ReactDOMServer.renderToString(App({ path: '/nested' })),
             $ = cheerio.load(html);
 
         assert.equal($('.nested').length, 1);
