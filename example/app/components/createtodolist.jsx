@@ -17,7 +17,7 @@ var CreateTodoList = React.createClass({
     createList: function(evt) {
         evt.preventDefault();
 
-        var input = this.refs.listName.getDOMNode(),
+        var input = this.refs.listName,
             listName = input.value;
 
         input.value = '';

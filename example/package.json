@@ -13,19 +13,29 @@
     "body-parser": "^1.5.2",
     "express": "^4.7.2",
     "fluxxor": "^1.5.0",
+    "gulp-babel": "^6.1.0",
     "lodash": "^3.0.0",
     "plates": "^0.4.9",
-    "react": "^0.12.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "superagent": "^0.18.2"
   },
   "devDependencies": {
+    "babel-plugin-syntax-jsx": "^6.1.18",
+    "babel-plugin-transform-react-jsx": "^6.1.18",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-changed": "^1.1.0",
     "gulp-nodemon": "^1.0.5",
-    "gulp-react": "^2.0.0",
     "vinyl-source-stream": "^1.0.0",
     "webpack": "^1.8.11",
     "webpack-dev-middleware": "^1.0.11"
+  },
+  "babel": {
+    "plugins": [
+      "transform-react-jsx",
+      "syntax-jsx"
+    ]
+
   }
 }

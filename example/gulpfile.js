@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     del = require('del'),
     changed = require('gulp-changed'),
-    reactTransform = require('gulp-react'),
+    babel = require('gulp-babel'),
     source = require('vinyl-source-stream'),
     nodemon = require('gulp-nodemon');
 
@@ -15,7 +15,7 @@ gulp.task('clean', function(done) {
 gulp.task('react', function() {
     return gulp.src('./app/components/*.jsx')
         .pipe(changed('./app/components/', { extension: '.js' }))
-        .pipe(reactTransform())
+        .pipe(babel())
         .pipe(gulp.dest('./app/components/'));
 });
 

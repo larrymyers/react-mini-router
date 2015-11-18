@@ -17,7 +17,7 @@ var CreateTodo = React.createClass({
     createTodo: function(evt) {
         evt.preventDefault();
 
-        var input = this.refs.text.getDOMNode(),
+        var input = this.refs.text,
             text = input.value;
 
         input.value = '';
