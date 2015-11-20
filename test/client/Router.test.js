@@ -1,7 +1,7 @@
-/* global describe, it, beforeEach, sinon */
+/* global describe, it, beforeEach, afterEach, sinon */
 
 var assert = require('assert'),
-    urllite = require('urllite'),
+    url = require('url'),
     event = require('../../lib/event'),
     Router = require('../../lib/Router');
 
@@ -10,11 +10,15 @@ describe('Router', function() {
 
     beforeEach(function() {
         mockWindow = document.createElement('div');
-        mockWindow.location = urllite(window.location.href);
+        mockWindow.location = url.parse(window.location.href);
         mockWindow.location.href = window.location.href;
     });
 
-    it('Should execute the provided onChangeCallback when the window location changes.', function() {
+    afterEach(function() {
+
+    });
+
+    it('Should execute the provided onChangeCallback when the window url hash changes.', function() {
         var callbackSpy = sinon.spy();
 
         var router = new Router(['/foo'], callbackSpy, { window: mockWindow });
@@ -22,7 +26,34 @@ describe('Router', function() {
 
         mockWindow.dispatchEvent(event.createEvent('hashchange'));
 
+        router.stopListening();
+
         assert.equal(callbackSpy.callCount, 1);
+        assert.equal(callbackSpy.firstCall.args[0], '/');
+    });
+
+    it('Should execute the provided onChangeCallback when the window url path changes.', function() {
+        var callbackSpy = sinon.spy();
+
+        var router = new Router(['/foo'], callbackSpy, { window: mockWindow, useHistory: true });
+        router.startListening();
+
+        mockWindow.location.pathname = '/foo';
+        mockWindow.location = url.parse(url.format(mockWindow.location));
+        mockWindow.dispatchEvent(event.createEvent('popstate'));
+
+        router.stopListening();
+
+        assert.equal(callbackSpy.callCount, 1);
+        assert.equal(callbackSpy.firstCall.args[0], '/foo');
+    });
+
+    it('Should not execute the onChangeCallback when not listening for history changes.', function() {
+
+    });
+
+    it('Should trap clicks on child anchor tags and route on matched urls.', function() {
+
     });
 
 });
