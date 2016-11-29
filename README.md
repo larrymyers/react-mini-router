@@ -1,3 +1,6 @@
+**This Project is Looking for Active Maintainers** 
+[See Issue #68 to Volunteer](https://github.com/larrymyers/react-mini-router/issues/68)
+
 # React Mini Router
 
 [![Build Status](https://travis-ci.org/larrymyers/react-mini-router.svg?branch=master)](https://travis-ci.org/larrymyers/react-mini-router)
