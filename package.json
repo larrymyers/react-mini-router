@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dist": "webpack -p --output-file=react-mini-router.min.js",
+    "dist": "npm run build && webpack -p --output-file=react-mini-router.min.js",
     "test": "npm run test-client && npm run test-server",
     "test-client": "karma start --single-run",
     "test-server": "mocha test/server/**/*.test.js"
