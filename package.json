@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dist": "webpack -p --output-file=react-mini-router.min.js",
+    "dist": "npm run build && webpack -p --output-file=react-mini-router.min.js",
     "test": "npm run test-client && npm run test-server",
     "test-client": "karma start --single-run",
     "test-server": "mocha test/server/**/*.test.js"
@@ -25,8 +25,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=0.14.0",
-    "react-dom": ">=0.14.0"
+    "react": ">=15.4.1",
+    "react-dom": ">=15.4.1"
   },
   "dependencies": {
     "fbjs": "^0.3.2",
@@ -40,7 +40,7 @@
     "karma-chrome-launcher": "^0.1.7",
     "karma-cli": "1.0.1",
     "karma-mocha": "^0.1.10",
-    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-phantomjs-launcher": "^1.0.2",
     "karma-sauce-launcher": "^0.2.10",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.1.0",
