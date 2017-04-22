@@ -1,4 +1,4 @@
-/*! ReactMiniRouter 2.1.0 - https://github.com/larrymyers/react-mini-router */
+/*! ReactMiniRouter 2.2.0 - https://github.com/larrymyers/react-mini-router */
 var ReactMiniRouter =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -44,16 +44,18 @@ var ReactMiniRouter =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = {
 	    RouterMixin: __webpack_require__(1),
-	    navigate: __webpack_require__(12)
+	    navigate: __webpack_require__(12),
+	    replaceNavigate: __webpack_require__(14)
 	};
 
-/***/ },
+
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2),
 	    ReactDOM = __webpack_require__(3),
@@ -307,21 +309,21 @@ var ReactMiniRouter =
 	}
 
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = React;
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = ReactDOM;
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -409,9 +411,9 @@ var ReactMiniRouter =
 	module.exports = EventListener;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// shim for using process in browser
 	var process = module.exports = {};
@@ -595,9 +597,9 @@ var ReactMiniRouter =
 	process.umask = function() { return 0; };
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -638,9 +640,9 @@ var ReactMiniRouter =
 
 	module.exports = emptyFunction;
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// addressing https://github.com/larrymyers/react-mini-router/issues/65
 	// this code taken from https://raw.githubusercontent.com/facebook/react/v15.3.2/src/renderers/dom/client/utils/getEventTarget.js
@@ -668,9 +670,9 @@ var ReactMiniRouter =
 
 	module.exports = getEventTarget;
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var isarray = __webpack_require__(9)
 
@@ -1100,18 +1102,18 @@ var ReactMiniRouter =
 	}
 
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
 	  return Object.prototype.toString.call(arr) == '[object Array]';
 	};
 
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	(function() {
 	  var URL, URL_PATTERN, defaults, urllite,
@@ -1180,9 +1182,9 @@ var ReactMiniRouter =
 	}).call(this);
 
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	var canUseDOM = !!(
 	    typeof window !== 'undefined' &&
@@ -1193,6 +1195,7 @@ var ReactMiniRouter =
 	module.exports = {
 	    canUseDOM: canUseDOM,
 	    hasPushState: canUseDOM && window.history && 'pushState' in window.history,
+	    hasReplaceState: canUseDOM && window.history && 'replaceState' in window.history,
 	    hasHashbang: function() {
 	        return canUseDOM && window.location.hash.indexOf('#!') === 0;
 	    },
@@ -1202,9 +1205,9 @@ var ReactMiniRouter =
 	};
 
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var detect = __webpack_require__(11);
 	var event = __webpack_require__(13);
@@ -1223,9 +1226,9 @@ var ReactMiniRouter =
 	};
 
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var detect = __webpack_require__(11);
 
@@ -1242,5 +1245,27 @@ var ReactMiniRouter =
 	};
 
 
-/***/ }
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var detect = __webpack_require__(11);
+	var event = __webpack_require__(13);
+
+	module.exports = function triggerUrl(url, silent) {
+	    if (detect.hasHashbang()) {
+	        window.location.hash = '#!' + url;
+
+	    } else if (detect.hasReplaceState) {
+	        window.history.replaceState({}, '', url);
+	        if (!silent) {
+	            window.dispatchEvent(event.createEvent('popstate'));
+	        }
+	    } else {
+	        console.error("Browser does not support replaceState, and hash is missing a hashbang prefix!");
+	    }
+	};
+
+
+/***/ })
 /******/ ]);
