@@ -1,4 +1,5 @@
 module.exports = {
     RouterMixin: require('./lib/RouterMixin'),
-    navigate: require('./lib/navigate')
+    navigate: require('./lib/navigate'),
+    replaceNavigate: require('./lib/replaceNavigate')
 };
