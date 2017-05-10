@@ -1,3 +1,8 @@
+## 2.2.1
+
+* Updated react to 15.5
+* Upated to use create-react-class & prop-types libraries to avoid error logs
+
 ## 2.0.0 
 
 * Supports React 0.14. Removed support for React <=0.13 due to introduction of react-dom.

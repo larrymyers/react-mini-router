@@ -44,9 +44,10 @@ The [dist/react-mini-router.js](./dist/react-mini-router.js) build exposes a glo
 ## Usage
 
     var React = require('react'),
+        createReactClass = require('create-react-class'),
         RouterMixin = require('react-mini-router').RouterMixin;
 
-    var App = React.createClass({
+    var App = createReactClass({
 
         mixins: [RouterMixin],
 

@@ -3,6 +3,7 @@
 var assert = require('assert'),
     React = require('react'),
     ReactDOM = require('react-dom'),
+    createReactClass = require('create-react-class')
     RouterMixin = require('./../../lib/RouterMixin'),
     navigate = require('./../../lib/navigate');
 
@@ -87,7 +88,7 @@ describe('RouterMixin', function() {
 
 });
 
-var AppClass = React.createClass({
+var AppClass = createReactClass({
 
     mixins: [RouterMixin],
 
@@ -115,7 +116,7 @@ var AppClass = React.createClass({
 
 });
 
-var NestedAppClass = React.createClass({
+var NestedAppClass = createReactClass({
 
     mixins: [RouterMixin],
 
