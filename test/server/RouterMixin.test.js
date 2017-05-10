@@ -4,6 +4,7 @@ var assert = require('assert'),
     cheerio = require('cheerio'),
     React = require('react'),
     ReactDOMServer = require('react-dom/server'),
+    createReactClass = require('create-react-class'),
     RouterMixin = require('./../../lib/RouterMixin');
 
 describe('RouterMixin', function() {
@@ -62,7 +63,7 @@ describe('RouterMixin', function() {
 
 });
 
-var AppClass = React.createClass({
+var AppClass = createReactClass({
 
     mixins: [RouterMixin],
 
@@ -94,7 +95,7 @@ var AppClass = React.createClass({
 
 });
 
-var AppWithoutNotFoundClass = React.createClass({
+var AppWithoutNotFoundClass = createReactClass({
 
     mixins: [RouterMixin],
 
@@ -112,7 +113,7 @@ var AppWithoutNotFoundClass = React.createClass({
 
 });
 
-var NestedAppClass = React.createClass({
+var NestedAppClass = createReactClass({
 
     mixins: [RouterMixin],
 

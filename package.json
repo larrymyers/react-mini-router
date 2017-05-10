@@ -1,6 +1,6 @@
 {
   "name": "react-mini-router",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A small url router for React apps.",
   "main": "index.js",
   "scripts": {
@@ -25,13 +25,14 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=15.4.1",
-    "react-dom": ">=15.4.1"
+    "react": ">=15.5.4",
+    "react-dom": ">=15.5.4"
   },
   "dependencies": {
     "fbjs": "^0.3.2",
     "path-to-regexp": "^1.0.1",
-    "urllite": "^0.5.0"
+    "urllite": "^0.5.0",
+    "prop-types": "^15.5.0"
   },
   "devDependencies": {
     "cheerio": "^0.18.0",
@@ -44,8 +45,9 @@
     "karma-sauce-launcher": "^0.2.10",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.1.0",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "create-react-class": "^15.5.0",
     "uglify-js": "^2.4.15",
     "webpack": "^1.12.2"
   }
