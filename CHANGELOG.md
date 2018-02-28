@@ -1,7 +1,19 @@
 ## 2.2.1
 
-* Updated react to 15.5
-* Upated to use create-react-class & prop-types libraries to avoid error logs
+* Updated react to 15.5.
+* Upated to use create-react-class & prop-types libraries to avoid error logs.
+
+## 2.2.0
+
+* Added `replaceNavigate` api.
+
+## 2.1.1
+
+* Updated dependencies.
+
+## 2.1.0 
+
+* Support React 15.4.0.
 
 ## 2.0.0 
 
